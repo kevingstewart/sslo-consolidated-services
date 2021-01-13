@@ -21,10 +21,26 @@ Perform the following steps to create the consolidated services architecture on 
 - **Step 3**: Install Docker and Docker-Compose:
 
   `$ sudo apt update`
+  
   `$ curl -fsSL https://get.docker.com -o get-docker.sh`
+  
   `$ sudo sh get-docker.sh`
+  
   `$ sudo usermod -aG docker ${USER}`
+  
   Logout and back in
+  
+  `$ sudo apt-get install docker python-pip jq`
+  
+  `$ curl --silent https://api.github.com/repos/docker/compose/releases/latest | jq .name -r`
+  
+  `$ VERSION=$(curl --silent https://api.github.com/repos/docker/compose/releases/latest | jq .name -r)`
+  
+  `$ DESTINATION=/usr/local/bin/docker-compose`
+  
+  `$ sudo curl -L https://github.com/docker/compose/releases/download/${VERSION}/docker-compose-$(uname -s)-$(uname -m) -o $DESTINATION`
+  
+  `$ sudo chmod 755 $DESTINATION`
 
 - **Step 4**: Download the docker-compose YAML and config files:
 
