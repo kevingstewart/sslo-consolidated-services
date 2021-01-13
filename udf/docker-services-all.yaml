@@ -1,0 +1,102 @@
+version: '3.3'
+services:
+
+  icap-clamav-service:
+    ports:
+      - '1344:1344'
+    restart: unless-stopped
+    container_name: icap
+    image: deepdiver/icap-clamav-service
+    cap_add:
+      - NET_ADMIN
+    command: >
+      bash -c "touch /var/tmp/test.txt
+      && /sbin/entrypoint.sh"
+    networks:
+      icap-net-in:
+        ipv4_address: 198.19.97.50
+
+  explicit-proxy-service:
+    ports:
+      - '3128:3128'
+    restart: unless-stopped
+    container_name: explicit-proxy
+    image: datadog/squid
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - "/srv/docker/squid/cache:/var/spool/squid"
+      - "./configs:/srv"
+    command: sh /srv/eproxy-init.sh
+    networks:
+      default: {}
+      eproxy-net-in:
+        ipv4_address: 198.19.96.30
+      eproxy-net-out:
+        ipv4_address: 198.19.96.130
+
+  layer3-service:
+    restart: unless-stopped
+    privileged: true
+    environment:
+      - INTERFACE=eth0
+    container_name: layer3
+    image: nsherron/suricata
+    cap_add:
+      - NET_ADMIN
+      - SYS_NICE
+    volumes:
+      - "./configs:/srv"
+    command: sh /srv/layer3-init.sh
+    networks:
+      default: {}
+      layer3-net-in:
+        ipv4_address: 198.19.64.30
+      layer3-net-out:
+        ipv4_address: 198.19.64.130
+
+networks:
+  icap-net-in:
+    driver: macvlan
+    driver_opts:
+      parent: ens6.50
+    ipam:
+      driver: default
+      config:
+        - subnet: 198.19.97.0/25
+
+  eproxy-net-in:
+    driver: macvlan
+    driver_opts:
+      parent: ens6.30
+    ipam:
+      driver: default
+      config:
+        - subnet: 198.19.96.0/25
+
+  eproxy-net-out:
+    driver: macvlan
+    driver_opts:
+      parent: ens6.40
+    ipam:
+      driver: default
+      config:
+        - subnet: 198.19.96.128/25
+
+  layer3-net-in:
+    driver: macvlan
+    driver_opts:
+      parent: ens6.60
+    ipam:
+      driver: default
+      config:
+        - subnet: 198.19.64.0/25
+
+  layer3-net-out:
+    driver: macvlan
+    driver_opts:
+      parent: ens6.70
+    ipam:
+      driver: default
+      config:
+        - subnet: 198.19.64.128/25
