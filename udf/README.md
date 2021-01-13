@@ -49,7 +49,7 @@ Perform the following steps to create the consolidated services architecture on 
 
     `$ lshw -c network`
     
-    Map the '**serial**' value in the output to the MAC address in UDF under the VM's Subnet tab, and then find the corresponding '**logical name**' value (ex. ens8). Edit the configuration file, and under the "**networks**:' section change the interface names accordingly. Do no modify the VLAN tag value (number after the dot - ex. ens8.40).
+    Map the '**serial**' value in the output to the MAC address in UDF under the VM's Subnet tab, and then find the corresponding '**logical name**' value (ex. ens8). Edit the configuration file, and under the "**networks**:' section at the bottom, change the interface names accordingly. Do no modify the VLAN tag value (number after the dot - ex. ens8.40).
 
 - **Step 6**: 
 
