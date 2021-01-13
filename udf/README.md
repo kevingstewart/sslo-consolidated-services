@@ -49,11 +49,25 @@ Perform the following steps to create the consolidated services architecture on 
 
     `$ lshw -c network`
     
-    Map the '**serial**' value in the output to the MAC address in UDF under the VM's Subnet tab, and then find the corresponding '**logical name**' value (ex. ens8). Edit the configuration file, and under the "**networks**:' section at the bottom, change the interface names accordingly. Do no modify the VLAN tag value (number after the dot - ex. ens8.40).
+    Map the '**serial**' value in the output to the MAC address in UDF under the VM's Subnet tab, and then find the corresponding '**logical name**' value (ex. ens8). Edit the configuration file, and under the "**networks**:' section at the bottom, change the interface names accordingly. Do no modify the VLAN tag value (number after the dot - ex. ens8.40). Then enable the corresponding interface(s) by modifying netplan:
     
-    Then enable the correspondinf interface(s):
+    `$ sudo vi /etc/netplan/50-cloud-init-yaml`
     
-    `$ ifconfig ens8 up`
+    Add you interface(s) with '*dhcp4: false*'. Example:
+    
+    ```
+    network:
+    version: 2
+    ethernets:
+        ens5:
+            dhcp4: true
+        ens8:
+            dhcp4: false
+    ```
+    
+    And then re-apply netplan:
+    
+    `$ sudo netplan apply`
 
 - **Step 6**: 
 
