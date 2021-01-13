@@ -28,7 +28,7 @@ Perform the following steps to create the consolidated services architecture on 
   
     `$ sudo usermod -aG docker ${USER}`
   
-    Logout and back in
+    Logout and back in, and then install the latest version of docker-compose:
   
     `$ sudo apt-get install python-pip jq`
   
