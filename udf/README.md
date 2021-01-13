@@ -69,7 +69,22 @@ Perform the following steps to create the consolidated services architecture on 
     
     `$ sudo netplan apply`
 
-- **Step 6**: 
+- **Step 6**: Initiate the Docker Compose. Within the *./sslo-consolidates-services/udf* folder, execute the following to build the docker containers:
+
+    `docker-compose -f docker-services-all.yaml up -d`
+    
+    You should see each of the containers pull down objects. Once complete, very the containers are running:
+    
+    `docker ps`
+    
+    Your output should look something like this:
+    
+    ```
+    CONTAINER ID   IMAGE                           COMMAND                  CREATED         STATUS         PORTS                    NAMES
+    d09e121dc3cd   datadog/squid                   "/sbin/entrypoint.sh…"   9 seconds ago   Up 3 seconds   0.0.0.0:3128->3128/tcp   explicit-proxy
+    2b5a9886454b   nsherron/suricata               "sh /srv/layer3-init…"   9 seconds ago   Up 4 seconds                            layer3
+    e02bb8a23a2d   deepdiver/icap-clamav-service   "/entrypoint.sh"         9 seconds ago   Up 5 seconds                            icap
+    ```
 
 - **Step 7**: 
 
