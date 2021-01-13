@@ -45,7 +45,11 @@ Perform the following steps to create the consolidated services architecture on 
     $ cd sslo-consolidated-services-main/udf
     ```
 
-- **Step 5**: 
+- **Step 5**: Identify the interface on the Ubuntu VM to anchor all of the layer 3 services, and then update the docker-compose YAML file accordingly. To find the interface, use this command:
+
+    `$ lshw -c network`
+    
+    Map the '**serial**' value in the output to the MAC address in UDF under the VM's Subnet tab, and then find the corresponding '**logical name**' value (ex. ens8). Edit the configuration file, and under the "**networks**:' section change the interface names accordingly. Do no modify the VLAN tag value (number after the dot - ex. ens8.40).
 
 - **Step 6**: 
 
