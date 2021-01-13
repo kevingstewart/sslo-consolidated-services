@@ -39,11 +39,11 @@ Perform the following steps to create the consolidated services architecture on 
 
 - **Step 4**: Download the docker-compose YAML and config files:
 
-    `$ wget https://github.com/kevingstewart/sslo-consolidated-services/archive/main.zip`
-
-    `$ unzip main.zip`
-
-    `$ cd sslo-consolidated-services-main/udf`
+    ```
+    $ wget https://github.com/kevingstewart/sslo-consolidated-services/archive/main.zip
+    $ unzip main.zip
+    $ cd sslo-consolidated-services-main/udf
+    ```
 
 - **Step 5**: 
 
