@@ -20,6 +20,12 @@ Perform the following steps to create the consolidated services architecture on 
 
 - **Step 3**: Install Docker and Docker-Compose:
 
+  `$ sudo apt update`
+  `$ curl -fsSL https://get.docker.com -o get-docker.sh`
+  `$ sudo sh get-docker.sh`
+  `$ sudo usermod -aG docker ${USER}`
+  Logout and back in
+
 - **Step 4**: Download the docker-compose YAML and config files:
 
   `$ wget https://github.com/kevingstewart/sslo-consolidated-services/archive/main.zip`
