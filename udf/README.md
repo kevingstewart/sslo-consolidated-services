@@ -30,9 +30,7 @@ Perform the following steps to create the consolidated services architecture on 
   
     Logout and back in
   
-    `$ sudo apt-get install docker python-pip jq`
-  
-    `$ curl --silent https://api.github.com/repos/docker/compose/releases/latest | jq .name -r`
+    `$ sudo apt-get install python-pip jq`
   
     `$ VERSION=$(curl --silent https://api.github.com/repos/docker/compose/releases/latest | jq .name -r)`
   
