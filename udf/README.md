@@ -47,7 +47,7 @@ Perform the following steps to create the consolidated services architecture on 
 
     `$ lshw -c network`
     
-    Map the '**serial**' value in the output to the MAC address in UDF under the VM's Subnet tab, and then find the corresponding '**logical name**' value (ex. ens8). Edit the configuration file, and under the "**networks**:' section at the bottom, change the interface names accordingly. Do no modify the VLAN tag value (number after the dot - ex. ens8.40). Then enable the corresponding interface(s) by modifying netplan:
+    Map the '**serial**' value in the output to the MAC address in UDF under the VM's Subnet tab, and then find the corresponding '**logical name**' value (ex. ens6). Edit the configuration file, and under the "**networks**:' section at the bottom, change the interface names accordingly. Do no modify the VLAN tag value (number after the dot - ex. ens8.40). Then enable the corresponding interface(s) by modifying netplan:
     
     `$ sudo vi /etc/netplan/50-cloud-init-yaml`
     
@@ -59,7 +59,7 @@ Perform the following steps to create the consolidated services architecture on 
     ethernets:
         ens5:
             dhcp4: true
-        ens8:
+        ens6:
             dhcp4: false
     ```
     
@@ -71,7 +71,7 @@ Perform the following steps to create the consolidated services architecture on 
 
     `docker-compose -f docker-services-all.yaml up -d`
     
-    You should see each of the containers pull down objects. Once complete, very the containers are running:
+    You should see each of the containers pull down objects. Once complete, verify the containers are running:
     
     `docker ps`
     
@@ -84,6 +84,22 @@ Perform the following steps to create the consolidated services architecture on 
     e02bb8a23a2d   deepdiver/icap-clamav-service   "/entrypoint.sh"         9 seconds ago   Up 5 seconds                            icap
     ```
 
-- **Step 7**: 
+- **Step 7**: Configure SSL Orchestrator to use these services. 
+
+    - Create a DLP VLAN, tag 50 (tagged).
+    - Create a DLP self-IP: 198.19.97.7 msak 255.255.255.128
+    
+    In the SSL Orchestrator configuration, create the following security services:
+    
+    - ICAP: 
+      - ICAP Devices: 198.19.97.50:1344
+      - Request Modification URI Path: /avscan
+      - Response Modification URI Path: /avscan
+      - Preview Max Length: 1048576
+    
+    - Layer3:
+    
+    - Proxy:
+    
 
 
