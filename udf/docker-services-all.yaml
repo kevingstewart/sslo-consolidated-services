@@ -52,6 +52,27 @@ services:
       layer3-net-out:
         ipv4_address: 198.19.64.130
 
+  webserver-service:
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    container_name: apache
+    image: httpd:2.4
+    cap_add:
+      - NET_ADMIN
+      - SYS_NICE
+    volumes:
+      - "./certs/server.crt:/usr/local/apache2/conf/server.crt"
+      - "./certs/server.key:/usr/local/apache2/conf/server.key"
+      - "./site:/usr/local/apache2/htdocs"
+      - "./configs:/srv"
+    command: sh /srv/webserver-init.sh
+    networks:
+      default: {}
+      webserver-net-in:
+        ipv4_address: 192.168.100.10
+
 networks:
   default:
     driver: bridge
@@ -100,3 +121,12 @@ networks:
       driver: default
       config:
         - subnet: 198.19.64.128/25
+
+  webserver-net-in:
+    driver: macvlan
+    driver_opts:
+      parent: ens6.80
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.100.0/24
