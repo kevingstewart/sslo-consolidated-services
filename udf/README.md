@@ -87,20 +87,28 @@ Perform the following steps to create the consolidated services architecture on 
 - **Step 7**: Configure SSL Orchestrator to use these services. 
 
     - Create the DLP VLAN on interface 1.3 tag 50 (tagged).
-   
-      `tmsh create net vlan dlp-vlan interfaces replace-all-with { 1.3 { tagged } } tag 50`
+      
+      ```
+      tmsh create net vlan dlp-vlan interfaces replace-all-with { 1.3 { tagged } } tag 50
+      ```
    
     - Create the DLP self-IP: 198.19.97.7 mask 255.255.255.128
     
-      `tmsh create net self dlp-self address 198.19.97.7/25 vlan dlp-vlan allow-service default`
+      ```
+      tmsh create net self dlp-self address 198.19.97.7/25 vlan dlp-vlan allow-service default
+      ```
     
     - Create the webserver VLAN on interface 1.3 tag 80 (tagged)
     
-      `tmsh create net vlan web-vlan interfaces replace-all-with { 1.3 { tagged } } tag 80`
+      ```
+      tmsh create net vlan web-vlan interfaces replace-all-with { 1.3 { tagged } } tag 80
+      ```
     
     - Create the webserver self-IP: 192.168.100.100 mask 255.255.255.0
     
-      `tmsh create net self web-self address 192.168.100.100/24 vlan web-vlan allow-service default`
+      ```
+      tmsh create net self web-self address 192.168.100.100/24 vlan web-vlan allow-service default
+      ```
     
     - Create an HTTP web server pool:
       - 192.168.100.10:80
@@ -108,7 +116,9 @@ Perform the following steps to create the consolidated services architecture on 
       - 192.168.100.12:80
       - 192.168.100.13:80
       
-      `tmsh create ltm pool web-http-pool monitor gateway_icmp members replace-all-with { 192.168.100.10:80 192.168.100.11:80 192.168.100.12:80 192.168.100.13:80 }`
+      ```
+      tmsh create ltm pool web-http-pool monitor gateway_icmp members replace-all-with { 192.168.100.10:80 192.168.100.11:80 192.168.100.12:80 192.168.100.13:80 }
+      ```
       
     - Create an HTTPS web server pool:
       - 192.168.100.10:443
@@ -116,7 +126,9 @@ Perform the following steps to create the consolidated services architecture on 
       - 192.168.100.12:443
       - 192.168.100.13:443
       
-      `tmsh create ltm pool web-https-pool monitor gateway_icmp members replace-all-with { 192.168.100.10:443 192.168.100.11:443 192.168.100.12:443 192.168.100.13:443 }`
+      ```
+      tmsh create ltm pool web-https-pool monitor gateway_icmp members replace-all-with { 192.168.100.10:443 192.168.100.11:443 192.168.100.12:443 192.168.100.13:443 }
+      ```
     
     In the SSL Orchestrator configuration, create the following security services:
     
