@@ -15,5 +15,4 @@ ip route delete default
 ip route add default via 198.19.64.245
 ip route add 10.1.10.0/24 via 198.19.64.7
 
-/docker-entrypoint.sh
-/usr/bin/suricata -c /etc/suricata/suricata.yaml -s /etc/suricata/signatures.rules -i eth1
+suricata -c /etc/suricata/suricata.yaml -i eth1
