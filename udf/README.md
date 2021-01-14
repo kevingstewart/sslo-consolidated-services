@@ -155,7 +155,7 @@ Perform the following steps to create the consolidated services architecture on 
         - Self-IP: 198.19.64.245/25
         - Create new VLAN on interface 1.3 tag 70
    
-    - **Proxy**:
+    - **Explicit Proxy**:
       - Auto Manage Addresses: enabled
       - To Service Configuration:
         - Self-IP: 198.19.96.7/25
