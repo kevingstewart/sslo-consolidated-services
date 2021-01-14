@@ -56,7 +56,7 @@ Perform the following steps to create the consolidated services architecture on 
     
     `$ sudo vi /etc/netplan/50-cloud-init-yaml`
     
-    Add you interface(s) with '*dhcp4: false*'. Example:
+    Add your interface(s) with '*dhcp4: false*'. Example:
     
     ```
     network:
