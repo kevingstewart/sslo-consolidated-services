@@ -83,10 +83,11 @@ Perform the following steps to create the consolidated services architecture on 
     Your output should look something like this:
     
     ```
-    CONTAINER ID   IMAGE                           COMMAND                  CREATED         STATUS         PORTS                    NAMES
-    d09e121dc3cd   datadog/squid                   "/sbin/entrypoint.sh…"   9 seconds ago   Up 3 seconds   0.0.0.0:3128->3128/tcp   explicit-proxy
-    2b5a9886454b   nsherron/suricata               "sh /srv/layer3-init…"   9 seconds ago   Up 4 seconds                            layer3
-    e02bb8a23a2d   deepdiver/icap-clamav-service   "/entrypoint.sh"         9 seconds ago   Up 5 seconds                            icap
+    CONTAINER ID   IMAGE                           COMMAND                  CREATED       STATUS       PORTS                                      NAMES
+    cf7e87de86c5   httpd:2.4                       "sh /srv/webserver-i…"   2 hours ago   Up 2 hours   0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp   apache
+    1a21a704678c   datadog/squid                   "/sbin/entrypoint.sh…"   2 hours ago   Up 2 hours   0.0.0.0:3128->3128/tcp                     explicit-proxy
+    2c6bb14e785e   deepdiver/icap-clamav-service   "/entrypoint.sh"         2 hours ago   Up 2 hours                                              icap
+    0873b751ecdc   nsherron/suricata               "sh /srv/layer3-init…"   2 hours ago   Up 2 hours                                              layer3
     ```
 
 - **Step 7**: Configure SSL Orchestrator to use these services. 
