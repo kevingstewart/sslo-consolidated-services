@@ -5,12 +5,10 @@ A Docker Compose configuration to create all of the SSLO security services on a 
 This Docker Compose configuration supports the **F5 UDF** demo environment, which itself supports 802.1Q VLAN tags. This also reduces the number of physical interfaces and connections required.
 
 ### Installation / Instructions
-Perform the following steps to create the consolidated services architecture on an Ubuntu 18.04 VM. 
+Perform the following steps to create the consolidated services architecture on an Ubuntu 18.04 (server) VM. 
 
 - **Step 1**: Ensure that the Ubuntu instance minimally binds the following interfaces in the SSL Orchestrator UDF instance:
   
-  - **Client VLAN** - used by the client (desktop) to connect to SSLO for forward proxy topologies.
-  - **Outbound VLAN** - used by the client (desktop) to connect to SSLO for reverse proxy topologies.
   - **DLP VLAN** - used as the single consolidated interface for all layer 3 security services (on separate 802.1Q tagged VLANs).
   - **L2 Inbound VLAN** - used to connect to the L2 service inbound interface.
   - **L2 Outbound VLAN** - used to connect to the L2 service outbound interface.
