@@ -132,13 +132,13 @@ Perform the following steps to create the consolidated services architecture on 
     
     In the SSL Orchestrator configuration, create the following security services:
     
-    - ICAP: 
+    - **ICAP**: 
       - ICAP Devices: 198.19.97.50:1344
       - Request Modification URI Path: /avscan
       - Response Modification URI Path: /avscan
       - Preview Max Length: 1048576
     
-    - Layer3:
+    - **Layer3**:
       - Auto Manage Addresses: enabled
       - To Service Configuration:
         - Self-IP: 198.19.64.7/25
@@ -149,7 +149,7 @@ Perform the following steps to create the consolidated services architecture on 
         - Self-IP: 198.19.64.245/25
         - Create new VLAN on interface 1.3 tag 70
    
-    - Proxy:
+    - **Proxy**:
       - Auto Manage Addresses: enabled
       - To Service Configuration:
         - Self-IP: 198.19.96.7/25
