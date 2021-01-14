@@ -1,27 +1,27 @@
 # SSL Orchestrator Consolidated Services Architecture (UDF Version)
 A Docker Compose configuration to create all of the SSLO security services on a single Ubuntu 18.04 instance, to both simplify and dramatically reduce resource utlization in a virtual environment.
 
-### About
+### <span style="color:#005ce6">About</span>
 This Docker Compose configuration supports the **F5 UDF** demo environment, which itself supports 802.1Q VLAN tags. This also reduces the number of physical interfaces and connections required.
 
-### Installation / Instructions
+### <span style="color:#cc0000">Installation / Instructions</span>
 Perform the following steps to create the consolidated services architecture on an Ubuntu 18.04 (server) VM. 
 
-- **Step 1**: Ensure that the Ubuntu instance minimally binds the following interfaces in the SSL Orchestrator UDF instance:
+- **<span style="color:#cc0000">Step 1</span>**: Ensure that the Ubuntu instance minimally binds the following interfaces in the SSL Orchestrator UDF instance:
   
   - **DLP VLAN** - used as the single consolidated interface for all layer 3 security services (on separate 802.1Q tagged VLANs).
   - **L2 Inbound VLAN** - used to connect to the L2 service inbound interface.
   - **L2 Outbound VLAN** - used to connect to the L2 service outbound interface.
   - **TAP VLAN** - used to connect to the TAP service interface.
 
-- **Step 2**: Open an SSH connection to the Ubuntu VM and create a new empty directory to work from.
+- **<span style="color:#cc0000">Step 2</span>**: Open an SSH connection to the Ubuntu VM and create a new empty directory to work from.
 
     ```
     mkdir ~/build
     cd ~/build
     ```
 
-- **Step 3**: Install Docker and Docker-Compose:
+- **<span style="color:#cc0000">Step 3</span>**: Install Docker and Docker-Compose:
 
     ```
     $ sudo apt update
@@ -40,7 +40,7 @@ Perform the following steps to create the consolidated services architecture on 
     $ sudo chmod 755 $DESTINATION
     ```
 
-- **Step 4**: Download the docker-compose YAML and config files:
+- **<span style="color:#cc0000">Step 4</span>**: Download the docker-compose YAML and config files:
 
     ```
     $ wget https://github.com/kevingstewart/sslo-consolidated-services/archive/main.zip
@@ -48,7 +48,7 @@ Perform the following steps to create the consolidated services architecture on 
     $ cd sslo-consolidated-services-main/udf
     ```
 
-- **Step 5**: Identify the interface on the Ubuntu VM to anchor all of the layer 3 services, and then update the docker-compose YAML file accordingly. To find the interface, use this command:
+- **<span style="color:#cc0000">Step 5</span>**: Identify the interface on the Ubuntu VM to anchor all of the layer 3 services, and then update the docker-compose YAML file accordingly. To find the interface, use this command:
 
     `$ lshw -c network`
     
@@ -72,7 +72,7 @@ Perform the following steps to create the consolidated services architecture on 
     
     `$ sudo netplan apply`
 
-- **Step 6**: Initiate the Docker Compose. Within the *./sslo-consolidates-services/udf* folder, execute the following to build the docker containers:
+- **<span style="color:#cc0000">Step 6</span>**: Initiate the Docker Compose. Within the *./sslo-consolidates-services/udf* folder, execute the following to build the docker containers:
 
     `docker-compose -f docker-services-all.yaml up -d`
     
@@ -90,7 +90,7 @@ Perform the following steps to create the consolidated services architecture on 
     0873b751ecdc   nsherron/suricata               "sh /srv/layer3-init…"   2 hours ago   Up 2 hours                                              layer3
     ```
 
-- **Step 7**: Configure SSL Orchestrator to use these services. 
+- **<span style="color:#cc0000">Step 7</span>**: Configure SSL Orchestrator to use these services. 
 
     - Create the DLP VLAN on interface 1.3 tag 50 (tagged).
       
