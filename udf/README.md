@@ -5,7 +5,7 @@ A Docker Compose configuration to create all of the SSLO security services on a 
 This Docker Compose configuration supports the **F5 UDF** demo environment, which itself supports 802.1Q VLAN tags. This also reduces the number of physical interfaces and connections required.
 
 ### <span style="color:#cc0000">Installation / Instructions</span>
-Perform the following steps to create the consolidated services architecture on an Ubuntu 18.04 (server) VM. 
+<span style="color:#cc0000">Perform</span> the following steps to create the consolidated services architecture on an Ubuntu 18.04 (server) VM. 
 
 - **<span style="color:#cc0000">Step 1</span>**: Ensure that the Ubuntu instance minimally binds the following interfaces in the SSL Orchestrator UDF instance:
   
