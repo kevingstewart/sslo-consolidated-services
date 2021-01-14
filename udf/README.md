@@ -16,6 +16,11 @@ Perform the following steps to create the consolidated services architecture on 
 
 - **Step 2**: Open an SSH connection to the Ubuntu VM and create a new empty directory to work from.
 
+    ```
+    mkdir ~/build
+    cd ~/build
+    ```
+
 - **Step 3**: Install Docker and Docker-Compose:
 
     ```
