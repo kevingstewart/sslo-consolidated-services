@@ -9,9 +9,6 @@ services:
     image: deepdiver/icap-clamav-service
     cap_add:
       - NET_ADMIN
-    command: >
-      bash -c "touch /var/tmp/test.txt
-      && /sbin/entrypoint.sh"
     networks:
       icap-net-in:
         ipv4_address: 198.19.97.50
@@ -29,7 +26,7 @@ services:
       - "./configs:/srv"
     command: sh /srv/eproxy-init.sh
     networks:
-      default-proxy: {}
+      default: {}
       eproxy-net-in:
         ipv4_address: 198.19.96.30
       eproxy-net-out:
@@ -49,19 +46,16 @@ services:
       - "./configs:/srv"
     command: sh /srv/layer3-init.sh
     networks:
-      default-layer3: {}
+      default: {}
       layer3-net-in:
         ipv4_address: 198.19.64.30
       layer3-net-out:
         ipv4_address: 198.19.64.130
 
 networks:
-  default-proxy:
+  default:
     driver: bridge
-    
-  default-layer3:
-    driver: bridge
-    
+
   icap-net-in:
     driver: macvlan
     driver_opts:
