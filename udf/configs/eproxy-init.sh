@@ -1,5 +1,8 @@
 #!/bin/bash 
 
+apt update -y
+apt install apt-utils net-tools tcpdump tshark -y
+
 ip route delete default
 ip route add default via 198.19.96.245
 ip route add 10.1.10.0/24 via 198.19.96.7
