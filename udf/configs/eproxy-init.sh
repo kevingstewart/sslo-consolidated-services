@@ -1,7 +1,7 @@
 #!/bin/bash 
 
 apt update -y
-apt install apt-utils net-tools tcpdump tshark -y
+apt install apt-utils net-tools tcpdump tshark vim nano -y
 
 ip route delete default
 ip route add default via 198.19.96.245
