@@ -1,7 +1,7 @@
 #!/bin/bash 
 
 apt update -y
-apt install apt-utils net-tools iproute2 -y
+apt install apt-utils net-tools iproute2 vim nano -y
 
 sed -ie 's/^#\(Include .*httpd-ssl.conf\)/\1/' /usr/local/apache2/conf/httpd.conf
 sed -ie 's/^#\(LoadModule .*mod_ssl.so\)/\1/' /usr/local/apache2/conf/httpd.conf
