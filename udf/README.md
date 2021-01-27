@@ -7,6 +7,8 @@ This Docker Compose configuration supports the **F5 UDF** demo environment, whic
 ### Installation / Instructions
 Perform the following steps to create the consolidated services architecture on an Ubuntu 18.04 (server) VM. 
 
+**Note that connections to inline services in this architecture is now different than in original SSLO UDF blueprints. Please see *sslo-configuration-info.md* for information on setting up SSL Orchestrator with these new consolidated services**
+
 - **Step 1**: Ensure that the Ubuntu instance minimally binds the following interfaces in the SSL Orchestrator UDF instance:
   
   - **DLP VLAN** - used as the single consolidated interface for all layer 3 security services (on separate 802.1Q tagged VLANs).
@@ -135,36 +137,6 @@ Perform the following steps to create the consolidated services architecture on 
       ```
       tmsh create ltm pool web-https-pool monitor gateway_icmp members replace-all-with { 192.168.100.10:443 192.168.100.11:443 192.168.100.12:443 192.168.100.13:443 }
       ```
-    
-    In the SSL Orchestrator configuration, create the following security services:
-    
-    - **ICAP**: 
-      - ICAP Devices: 198.19.97.50:1344
-      - Request Modification URI Path: /avscan
-      - Response Modification URI Path: /avscan
-      - Preview Max Length: 1048576
-    
-    - **Layer3**:
-      - Auto Manage Addresses: enabled
-      - To Service Configuration:
-        - Self-IP: 198.19.64.7/25
-        - Create new VLAN on interface 1.3 tag 60
-      - Security Devices:
-        - 198.19.64.30
-      - From Service Configuration:
-        - Self-IP: 198.19.64.245/25
-        - Create new VLAN on interface 1.3 tag 70
-   
-    - **Explicit Proxy**:
-      - Auto Manage Addresses: enabled
-      - To Service Configuration:
-        - Self-IP: 198.19.96.7/25
-        - Create new VLAN on interface 1.3 tag 30
-      - Security Devices:
-        - 198.19.96.30
-      - From Service Configuration:
-        - Self-IP: 198.19.96.245/25
-        - Create new VLAN on interface 1.3 tag 40
  
     
 
