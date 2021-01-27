@@ -8,9 +8,11 @@ This Docker Compose configuration supports the **F5 UDF** demo environment, whic
 Perform the following steps to create the consolidated services architecture on an Ubuntu 18.04 (server) VM. 
 
 -------------------
+
 **Note that connections to inline services in this architecture is now different than in original SSLO UDF blueprints.** 
 
 **Please see *sslo-configuration-info.md* for information on setting up SSL Orchestrator with these new consolidated services**
+
 -------------------
 
 - **Step 1**: Ensure that the Ubuntu instance minimally binds the following interfaces in the SSL Orchestrator UDF instance:
