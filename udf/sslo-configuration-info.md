@@ -35,5 +35,19 @@ In the SSL Orchestrator configuration, create the following security services:
         - Self-IP: 198.19.96.245/25
         - Create new VLAN on interface 1.3 tag 40
         
-        
-        
+          - **Step 3**: Configure the service in SSL Orchestrator. If using a standard SSL Orchestrator UDF blueprint:
+  
+      - To-service: interface 1.4
+      - From-service: interface 1.5
+
+    - **Layer2**:
+      - To Service Configuration:
+        - To-service: interface 1.4
+      - From Service Configuration:
+        - From-service: interface 1.5
+
+    - **TAP**:
+      - To Service Configuration:
+        - To-service: interface 1.6
+
+
