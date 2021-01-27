@@ -28,21 +28,21 @@ In the SSL Orchestrator configuration, create the following security services:
   - Auto Manage Addresses: enabled
   - To Service Configuration:
     - Self-IP: 198.19.96.7/25
-    - Create new VLAN on interface 1.3 tag 30
+    - Create new VLAN on interface **1.3 tag 30**
   - Security Devices:
     - 198.19.96.30
   - From Service Configuration:
     - Self-IP: 198.19.96.245/25
-    - Create new VLAN on interface 1.3 tag 40
+    - Create new VLAN on interface **1.3 tag 40**
 
 - **Layer2**:
   - To Service Configuration:
-    - To-service: interface 1.4
+    - To-service: interface **1.4**
   - From Service Configuration:
-    - From-service: interface 1.5
+    - From-service: interface **1.5**
 
 - **TAP**:
   - To Service Configuration:
-    - To-service: interface 1.6
+    - To-service: interface **1.6**
 
 
