@@ -17,12 +17,12 @@ In the SSL Orchestrator configuration, create the following security services:
   - Auto Manage Addresses: enabled
   - To Service Configuration:
     - Self-IP: 198.19.64.7/25
-    - Create new VLAN on interface 1.3 tag 60
+    - Create new VLAN on interface **1.3 tag 60**
   - Security Devices:
     - 198.19.64.30
   - From Service Configuration:
     - Self-IP: 198.19.64.245/25
-    - Create new VLAN on interface 1.3 tag 70
+    - Create new VLAN on interface **1.3 tag 70**
 
 - **Explicit Proxy**:
   - Auto Manage Addresses: enabled
