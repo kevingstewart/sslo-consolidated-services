@@ -1,6 +1,14 @@
 ## Configuration settings for SSLO layer 2 and TAP security services.
 Layer 2 networking inside containers is non-trivial, so this configuration installs the necessary network and security services on the host VM for layer 2 and TAP. All layer 3 services are otherwise installed via the Docker Compose.
 
+-------------------
+
+**Note that connections to inline services in this architecture is now different than in original SSLO UDF blueprints.** 
+
+**Please see *sslo-configuration-info.md* for information on setting up SSL Orchestrator with these new consolidated services**
+
+-------------------
+
 - **Layer 2 Service**: This configuration adds a network bridge and Suricata software to the host.
 
   - Step 1: Install and configure bridge-utils
@@ -89,18 +97,6 @@ Layer 2 networking inside containers is non-trivial, so this configuration insta
       $ service --status-all
       ```
 
-  - **Step 3**: Configure the service in SSL Orchestrator. If using a standard SSL Orchestrator UDF blueprint:
-  
-      - To-service: interface 1.4
-      - From-service: interface 1.5
 
-
-- **TAP service**: This configuration adds a tap interface to the host.
-
-  - **Step 1**: Verify that the interface is configured in Netplan. The above layer 2 configuration example included the ens9 interface to be used for the tap service.
-  
-  - **Step 2**: Configure the service in SSL Orchestrator. If using a standard SSL Orchestrator UDF blueprint:
-  
-      - To-service: interface 1.6
     
    
