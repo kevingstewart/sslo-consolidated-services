@@ -11,5 +11,7 @@ ip route add 8.8.8.8 via ${ipaddr}1
 
 echo "nameserver 8.8.8.8" > /etc/resolv.conf
 echo "cache deny all" >> /etc/squid/squid.conf
+echo 'logformat authheader %ts.%03tu %6tr %>a %Ss/%03>Hs %<st %rm %ru "%{X-Authenticated-User}>h" %Sh/%<a %mt' >> /etc/squid/squid.conf
+echo 'access_log /var/log/squid/access.log authheader' >> /etc/squid/squid.conf
 
 /sbin/entrypoint.sh

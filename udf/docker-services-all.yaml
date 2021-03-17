@@ -24,6 +24,7 @@ services:
     volumes:
       - "/srv/docker/squid/cache:/var/spool/squid"
       - "./configs:/srv"
+      - "/var/log/squid:/var/log/squid"
     command: sh /srv/eproxy-init.sh
     networks:
       default: {}
