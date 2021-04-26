@@ -57,13 +57,19 @@ Layer 2 networking inside containers is non-trivial, so this configuration insta
       $ sudo netplan apply
       $ ifconfig
       ```
-    
-  - Step 2: Install and configure Suricata
+      
+  - Step 2: Disable iptables processing on the bridge interface
+
+      ```
+      echo "0" > /proc/sys/net/bridge/bridge-nf-call-iptables
+      ```
+
+  - Step 3: Install and configure Suricata
   
       ```
       $ sudo apt-get install unzip suricata
       $ wget http://rules.emergingthreats.net/open/suricata/emerging.rules.zip
-      $ unzip emerging.rules.zip -d /etc/suricata/
+      $ sudo unzip emerging.rules.zip -d /etc/suricata/
       ```
     
       Edit the suricata config - find and replace the default-rule-path (/etc/suricata/rules) also find all instances of eth0, eth1, eth2 and change to correct local interface (ex. ens7)
