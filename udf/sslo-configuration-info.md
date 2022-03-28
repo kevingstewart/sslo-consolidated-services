@@ -46,7 +46,10 @@ In the SSL Orchestrator configuration, create the following security services:
     - To-service: interface **1.6**
 
 - **Web Servers**:
-  - Pool: 192.168.100.10 (supports http:80 and https:443)
+  - 192.168.100.10 (supports http:80 and https:443)
+  - 192.168.100.11 (supports http:80 and https:443)
+  - 192.168.100.12 (supports http:80 and https:443)
+  - 192.168.100.13 (supports http:80 and https:443)
 
 - **Juiceshop**:
   - Pool: 192.168.100.200:443 (requires server SSL)
