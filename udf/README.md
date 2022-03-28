@@ -4,6 +4,9 @@ A Docker Compose configuration to create all of the SSLO security services on a 
 ### About
 This Docker Compose configuration supports the **F5 UDF** demo environment, which itself supports 802.1Q VLAN tags. This also reduces the number of physical interfaces and connections required. The Docker Compose file contains all of the layer 3 services (ICAP, explicit proxy, layer 3 service, and web servers). Layer 2 and TAP services are defined directly on the host system and described in the "layer2-tap-config" readme file.
 
+#### Update
+Now includes a separate compose file with Juiceshop for AWAF vulnerability testing.
+
 ### Installation / Instructions
 Perform the following steps to create the consolidated services architecture on an Ubuntu 18.04 (server) VM. 
 
@@ -144,6 +147,9 @@ Perform the following steps to create the consolidated services architecture on 
       tmsh create ltm pool web-https-pool monitor gateway_icmp members replace-all-with { 192.168.100.10:443 192.168.100.11:443 192.168.100.12:443 192.168.100.13:443 }
       ```
  
-    
+- **Optional**: Deploy with Juiceshop 
+
+    - Deploy with the "docker-services-all-and-juiceshop.yaml" compose file
+    - Create a Juiceshop pool at 192.168.10.200:443 (requires server SSL)    
 
 
