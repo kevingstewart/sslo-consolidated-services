@@ -10,6 +10,7 @@ services:
     cap_add:
       - NET_ADMIN
     networks:
+      default: {}
       icap-net-in:
         ipv4_address: 198.19.97.50
 
