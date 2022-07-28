@@ -58,9 +58,8 @@ Minimum requirements:
 - **Step 4**: Download the docker-compose YAML and config files:
 
     ```
-    $ wget https://github.com/kevingstewart/sslo-consolidated-services/archive/main.zip
-    $ unzip main.zip
-    $ cd sslo-consolidated-services-main/udf
+    $ git clone https://github.com/kevingstewart/sslo-consolidated-services.git
+    $ cd sslo-consolidated-services/udf/
     ```
 
 - **Step 5**: Identify the interface on the Ubuntu VM to anchor all of the layer 3 services, and then update the docker-compose YAML file accordingly. To find the interface, use this command:
@@ -175,4 +174,4 @@ Minimum requirements:
   http://[IP-address]:8080/guacamole
   ```
 
-  Admin is **guacadmin:guacadmin**, user account is pre-created as **user:user**.
+  Admin is `guacadmin:guacadmin`, user account is pre-created as `user:user`.
