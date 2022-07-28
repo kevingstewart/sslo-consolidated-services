@@ -10,6 +10,10 @@ Now includes a separate compose file with Juiceshop for AWAF vulnerability testi
 ### Installation / Instructions
 Perform the following steps to create the consolidated services architecture on an Ubuntu 18.04 (server) VM. 
 
+Minimum requirements:
+- docker >= 20.10
+- docker-compose >= 1.29
+
 -------------------
 
 **Note that connections to inline services in this architecture is now different than in original SSLO UDF blueprints.** 
@@ -83,7 +87,13 @@ Perform the following steps to create the consolidated services architecture on 
     
     `$ sudo netplan apply`
 
-- **Step 6**: Initiate the Docker Compose. Within the *./sslo-consolidates-services/udf* folder, execute the following to build the docker containers:
+- **Step 6**: Set the following as executable:
+  
+  ```
+  sudo chmod -R +x configs/webrdp/init
+  ```
+
+- **Step 7**: Initiate the Docker Compose. Within the *./sslo-consolidates-services/udf* folder, execute the following to build the docker containers:
 
     `docker-compose -f docker-services-all.yaml up -d`
     
@@ -94,14 +104,19 @@ Perform the following steps to create the consolidated services architecture on 
     Your output should look something like this:
     
     ```
-    CONTAINER ID   IMAGE                           COMMAND                  CREATED       STATUS       PORTS                                      NAMES
-    cf7e87de86c5   httpd:2.4                       "sh /srv/webserver-i…"   2 hours ago   Up 2 hours   0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp   apache
-    1a21a704678c   datadog/squid                   "/sbin/entrypoint.sh…"   2 hours ago   Up 2 hours   0.0.0.0:3128->3128/tcp                     explicit-proxy
-    2c6bb14e785e   deepdiver/icap-clamav-service   "/entrypoint.sh"         2 hours ago   Up 2 hours                                              icap
-    0873b751ecdc   nsherron/suricata               "sh /srv/layer3-init…"   2 hours ago   Up 2 hours                                              layer3
+    CONTAINER ID   IMAGE                           COMMAND                  CREATED             STATUS                       PORTS                                                                      NAMES
+    62def421cb6d   guacamole/guacamole             "/opt/guacamole/bin/…"   About an hour ago   Up About an hour             0.0.0.0:8080->8080/tcp, :::8080->8080/tcp                                  guacamole_compose
+    61d0daf33852   guacamole/guacd                 "/bin/sh -c '/usr/lo…"   About an hour ago   Up About an hour (healthy)   4822/tcp                                                                   guacd_compose
+    bae66a4cd871   httpd:2.4                       "sh /srv/webserver-i…"   About an hour ago   Up About an hour             0.0.0.0:80->80/tcp, :::80->80/tcp, 0.0.0.0:443->443/tcp, :::443->443/tcp   apache
+    b38ebd93928a   datadog/squid                   "/sbin/entrypoint.sh…"   About an hour ago   Up About an hour             0.0.0.0:3128->3128/tcp, :::3128->3128/tcp                                  explicit-proxy
+    3c149906cba2   postgres:13.4-buster            "docker-entrypoint.s…"   About an hour ago   Up About an hour             5432/tcp                                                                   postgres_guacamole_compose
+    3514334adff4   nginx:alpine                    "/docker-entrypoint.…"   About an hour ago   Up About an hour             80/tcp, 0.0.0.0:8443->8443/tcp, :::8443->8443/tcp                          nginx
+    68ccaaa17e1d   deepdiver/icap-clamav-service   "/entrypoint.sh"         About an hour ago   Up About an hour                                                                                        icap
+    41a34f33c8e7   bkimminich/juice-shop           "/nodejs/bin/node /j…"   About an hour ago   Up About an hour             3000/tcp                                                                   juiceshop
+    7cbba7dd10cd   nsherron/suricata               "sh /srv/layer3-init…"   About an hour ago   Up About an hour                                                                                        layer3
     ```
 
-- **Step 7**: Configure SSL Orchestrator to use these services. 
+- **Step 8**: Configure SSL Orchestrator to use these services. 
 
     - Create the DLP VLAN on interface 1.3 tag 50 (tagged).
       
@@ -146,10 +161,18 @@ Perform the following steps to create the consolidated services architecture on 
       ```
       tmsh create ltm pool web-https-pool monitor gateway_icmp members replace-all-with { 192.168.100.10:443 192.168.100.11:443 192.168.100.12:443 192.168.100.13:443 }
       ```
- 
-- **Optional**: Deploy with Juiceshop 
+-------------------
 
-    - Deploy with the "docker-services-all-and-juiceshop.yaml" compose file
-    - Create a Juiceshop pool at 192.168.10.200:443 (requires server SSL)    
+- **Extra: Juice Shop**: Implement Juice Shop for web vulnerability testing. Juice Shop is a modern insecure web application for testing web security frameworks. You can create an inbound (application or gateway mode) SSL Orchestrator topology that points to the Juice Shop instance, and insert your WAF of choice to test functionality inside the decrypted service chain.
 
+    - Create a Juice Shop pool at 192.168.10.200:443 (requires server SSL)    
 
+-------------------
+
+- **Extra: Guacamole**: Access the client desktop with Web-based RDP. Guacamole is included to provide RDP access to internal desktop resources. Access it using the following: 
+
+  ```
+  http://[IP-address]:8080/guacamole
+  ```
+
+  Admin is **guacadmin:guacadmin**, user account is pre-created as **user:user**.
