@@ -126,7 +126,7 @@ services:
       default: {}
     restart: unless-stopped
     volumes:
-     #- ./configs/webrdp/init:/docker-entrypoint-initdb.d:z
+      - ./configs/webrdp/init:/docker-entrypoint-initdb.d:z
       - ./configs/webrdp/data:/var/lib/postgresql/data:Z
 
   # Additional Services: Guacamole
