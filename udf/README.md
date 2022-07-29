@@ -122,7 +122,7 @@ Minimum requirements:
   c26e78acb75e   guacamole/guacd                 "/bin/sh -c '/usr/lo…"   11 minutes ago   Up 11 minutes (healthy)   4822/tcp                                                                   guacd_compose
   ```
 
-- **Step 8**: Configure SSL Orchestrator to use these services. 
+- **Step 7**: Configure SSL Orchestrator to use these services. 
 
     - Create the DLP VLAN on interface 1.3 tag 50 (tagged).
       
@@ -167,6 +167,14 @@ Minimum requirements:
       ```
       tmsh create ltm pool web-https-pool monitor gateway_icmp members replace-all-with { 192.168.100.10:443 192.168.100.11:443 192.168.100.12:443 192.168.100.13:443 }
       ```
+-------------------
+
+- **Extra: Rebuilding from scratch**: In the event that things going terribly wrong, a script has been provided that will completely delete all containers and images, perform a total Docker system flush, then re-start the Docker Compose environment.
+
+  ```
+  ./security-services-rebuild.sh
+  ```
+
 -------------------
 
 - **Extra: Juice Shop**: Implement Juice Shop for web vulnerability testing. Juice Shop is a modern insecure web application for testing web security frameworks. You can create an inbound application mode SSL Orchestrator topology that points to the Juice Shop instance, and insert your WAF of choice to test functionality inside the decrypted service chain. To implement Juice Shop:
