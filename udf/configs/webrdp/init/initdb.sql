@@ -17,6 +17,14 @@
 -- under the License.
 --
 
+-- 
+-- Set local variables
+--
+set session my.vars.rdpname = 'Client Desktop';
+set session my.vars.rdphost = '10.1.1.5';
+set session my.vars.rdpuser = 'student';
+set session my.vars.rdppass = 'agility';
+
 --
 -- Connection group types
 --
@@ -789,3 +797,20 @@ FROM (
 JOIN guacamole_entity          ON permissions.username = guacamole_entity.name AND guacamole_entity.type = 'USER'
 JOIN guacamole_entity affected ON permissions.affected_username = affected.name AND guacamole_entity.type = 'USER'
 JOIN guacamole_user            ON guacamole_user.entity_id = affected.entity_id;
+
+-- Create initial Client Desktop
+INSERT INTO guacamole_connection (connection_name, protocol) VALUES (current_setting('my.vars.rdpname'), 'rdp');
+
+INSERT INTO guacamole_connection_parameter (connection_id, parameter_name, parameter_value) SELECT connection_id, 'hostname', current_setting('my.vars.rdphost') FROM guacamole_connection WHERE connection_name = current_setting('my.vars.rdpname') AND parent_id IS NULL;
+INSERT INTO guacamole_connection_parameter (connection_id, parameter_name, parameter_value) SELECT connection_id, 'port', 3389 FROM guacamole_connection WHERE connection_name = current_setting('my.vars.rdpname') AND parent_id IS NULL;
+INSERT INTO guacamole_connection_parameter (connection_id, parameter_name, parameter_value) SELECT connection_id, 'username', current_setting('my.vars.rdpuser') FROM guacamole_connection WHERE connection_name = current_setting('my.vars.rdpname') AND parent_id IS NULL;
+INSERT INTO guacamole_connection_parameter (connection_id, parameter_name, parameter_value) SELECT connection_id, 'password', current_setting('my.vars.rdppass') FROM guacamole_connection WHERE connection_name = current_setting('my.vars.rdpname') AND parent_id IS NULL;
+INSERT INTO guacamole_connection_parameter (connection_id, parameter_name, parameter_value) SELECT connection_id, 'security', 'any' FROM guacamole_connection WHERE connection_name = current_setting('my.vars.rdpname') AND parent_id IS NULL;
+INSERT INTO guacamole_connection_parameter (connection_id, parameter_name, parameter_value) SELECT connection_id, 'ignore-cert', 'true' FROM guacamole_connection WHERE connection_name = current_setting('my.vars.rdpname') AND parent_id IS NULL;
+
+-- Create user account and assign permissions to the Client Desktop
+INSERT INTO guacamole_entity (name, type) VALUES ('user','USER');
+INSERT INTO guacamole_user (entity_id, password_hash, password_salt, password_date) SELECT entity_id, decode('04F8996DA763B7A969B1028EE3007569EAF3A635486DDAB211D512C85B9DF8FB', 'hex'), NULL, CURRENT_TIMESTAMP FROM guacamole_entity WHERE name = 'user' and guacamole_entity.type = 'USER';
+
+INSERT INTO guacamole_connection_permission (entity_id, connection_id, permission) SELECT entity_id, 1, 'READ' FROM guacamole_entity WHERE name = 'user' and guacamole_entity.type = 'USER';
+

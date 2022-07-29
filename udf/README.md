@@ -5,7 +5,9 @@ A Docker Compose configuration to create all of the SSLO security services on a 
 This Docker Compose configuration supports the **F5 UDF** demo environment, which itself supports 802.1Q VLAN tags. This also reduces the number of physical interfaces and connections required. The Docker Compose file contains all of the layer 3 services (ICAP, explicit proxy, layer 3 service, and web servers). Layer 2 and TAP services are defined directly on the host system and described in the "layer2-tap-config" readme file.
 
 #### Update
-Now includes a separate compose file with Juiceshop for AWAF vulnerability testing.
+- Now includes a **Owasp Juice Shop** for AWAF vulnerability testing.
+
+- Now includes a **Guacamole** instance for web-based RDP connections into RDP hosts.
 
 ### Installation / Instructions
 Perform the following steps to create the consolidated services architecture on an Ubuntu 18.04 (server) VM. 
@@ -162,9 +164,12 @@ Minimum requirements:
       ```
 -------------------
 
-- **Extra: Juice Shop**: Implement Juice Shop for web vulnerability testing. Juice Shop is a modern insecure web application for testing web security frameworks. You can create an inbound (application or gateway mode) SSL Orchestrator topology that points to the Juice Shop instance, and insert your WAF of choice to test functionality inside the decrypted service chain.
+- **Extra: Juice Shop**: Implement Juice Shop for web vulnerability testing. Juice Shop is a modern insecure web application for testing web security frameworks. You can create an inbound application mode SSL Orchestrator topology that points to the Juice Shop instance, and insert your WAF of choice to test functionality inside the decrypted service chain. To implement Juice Shop:
 
-    - Create a Juice Shop pool at 192.168.10.200:443 (requires server SSL)    
+  - Create a Juice Shop pool at 192.168.10.200:443 (requires server SSL)
+  - Create an inbound application mode topology or existing applicaition topology, and apply the Juice Shop pool.
+  - Insert a WAF security product into the decrypted SSL Orchestrator service chain.
+  - Alternately, create a normal reverse proxy application virtual server, including the Juice Shop pool and server SSL profile. Attach the existing application policy to the VIP.
 
 -------------------
 
@@ -174,4 +179,23 @@ Minimum requirements:
   http://[IP-address]:8080/guacamole
   ```
 
-  Admin is `guacadmin:guacadmin`, user account is pre-created as `user:user`.
+  - Admin control is accessible with the following credentials: `guacadmin:guacadmin`, 
+  - A separate user account is pre-created with access to the client desktop, with credentials: `user:user`
+
+  The current Guacamole PostgreSQL initialization script pre-creates a `Client Desktop` at 10.1.1.5:3389, and assigns permissions to the account `user` to access this desktop. To change the desktop parameters, edit the initdb.sql file in the ./configs/webrdp/init folder **before** the first run of the Docker Compose file. 
+  
+  ```
+  set session my.vars.rdpname = 'Client Desktop';
+  set session my.vars.rdphost = '10.1.1.5';
+  set session my.vars.rdpuser = 'student';
+  set session my.vars.rdppass = 'agility';
+  ```
+
+  If the Docker-Compose has already been started at least once, you'll need to delete the guacamole folder by performing the following steps:
+
+  ```  
+  docker-compose -f docker-services-all.yaml down
+  sudo rm -rm ./configs/webrdp/data/guacamole/
+  docker-compose -f docker-services-all.yaml up -d
+  ```
+  
