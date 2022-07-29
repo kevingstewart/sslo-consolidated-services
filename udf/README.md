@@ -41,36 +41,41 @@ Minimum requirements:
 - **Step 3**: Install Docker and Docker-Compose:
 
     ```
-    $ sudo apt update
-    $ curl -fsSL https://get.docker.com -o get-docker.sh
-    $ sudo sh get-docker.sh
-    $ sudo usermod -aG docker ${USER}
+    sudo apt update
+    curl -fsSL https://get.docker.com -o get-docker.sh
+    sudo sh get-docker.sh
+    sudo usermod -aG docker ${USER}
     ```
   
     Logout and back in, and then install the latest version of docker-compose:
   
     ```
-    $ sudo apt-get install python-pip jq
-    $ VERSION=$(curl --silent https://api.github.com/repos/docker/compose/releases/latest | jq .name -r)
-    $ DESTINATION=/usr/local/bin/docker-compose
-    $ sudo curl -L https://github.com/docker/compose/releases/download/${VERSION}/docker-compose-$(uname -s)-$(uname -m) -o $DESTINATION
-    $ sudo chmod 755 $DESTINATION
+    sudo apt-get install python-pip jq
+    VERSION=$(curl --silent https://api.github.com/repos/docker/compose/releases/latest | jq .name -r)
+    DESTINATION=/usr/local/bin/docker-compose
+    sudo curl -L https://github.com/docker/compose/releases/download/${VERSION}/docker-compose-$(uname -s)-$(uname -m) -o $DESTINATION
+    sudo chmod 755 $DESTINATION
     ```
 
 - **Step 4**: Download the docker-compose YAML and config files:
 
     ```
-    $ git clone https://github.com/kevingstewart/sslo-consolidated-services.git
-    $ cd sslo-consolidated-services/udf/
+    git clone https://github.com/kevingstewart/sslo-consolidated-services.git
+    cd sslo-consolidated-services/udf/
+    sudo chmod -R +x configs/webrdp/init/
     ```
 
 - **Step 5**: Identify the interface on the Ubuntu VM to anchor all of the layer 3 services, and then update the docker-compose YAML file accordingly. To find the interface, use this command:
 
-    `$ lshw -c network`
+    ```
+    lshw -c network
+    ```
     
     Map the '**serial**' value in the output to the MAC address in UDF under the VM's Subnet tab, and then find the corresponding '**logical name**' value (ex. ens6). Edit the configuration file, and under the "**networks**:' section at the bottom, change the interface names accordingly (multiple locations). Do not modify the VLAN tag value (number after the dot - ex. ens6.40). Then enable the corresponding interface(s) by modifying netplan:
     
-    `$ sudo vi /etc/netplan/50-cloud-init-yaml`
+    ```
+    sudo vi /etc/netplan/50-cloud-init-yaml
+    ```
     
     Add your interface(s) with '*dhcp4: false*'. Example:
     
@@ -86,36 +91,36 @@ Minimum requirements:
     
     And then re-apply netplan:
     
-    `$ sudo netplan apply`
-
-- **Step 6**: Set the following as executable:
-  
-  ```
-  sudo chmod -R +x configs/webrdp/init
-  ```
-
-- **Step 7**: Initiate the Docker Compose. Within the *./sslo-consolidates-services/udf* folder, execute the following to build the docker containers:
-
-    `docker-compose -f docker-services-all.yaml up -d`
-    
-    You should see each of the containers pull down objects. Once complete, verify the containers are running:
-    
-    `docker ps`
-    
-    Your output should look something like this:
-    
     ```
-    CONTAINER ID   IMAGE                           COMMAND                  CREATED             STATUS                       PORTS                                                                      NAMES
-    62def421cb6d   guacamole/guacamole             "/opt/guacamole/bin/…"   About an hour ago   Up About an hour             0.0.0.0:8080->8080/tcp, :::8080->8080/tcp                                  guacamole_compose
-    61d0daf33852   guacamole/guacd                 "/bin/sh -c '/usr/lo…"   About an hour ago   Up About an hour (healthy)   4822/tcp                                                                   guacd_compose
-    bae66a4cd871   httpd:2.4                       "sh /srv/webserver-i…"   About an hour ago   Up About an hour             0.0.0.0:80->80/tcp, :::80->80/tcp, 0.0.0.0:443->443/tcp, :::443->443/tcp   apache
-    b38ebd93928a   datadog/squid                   "/sbin/entrypoint.sh…"   About an hour ago   Up About an hour             0.0.0.0:3128->3128/tcp, :::3128->3128/tcp                                  explicit-proxy
-    3c149906cba2   postgres:13.4-buster            "docker-entrypoint.s…"   About an hour ago   Up About an hour             5432/tcp                                                                   postgres_guacamole_compose
-    3514334adff4   nginx:alpine                    "/docker-entrypoint.…"   About an hour ago   Up About an hour             80/tcp, 0.0.0.0:8443->8443/tcp, :::8443->8443/tcp                          nginx
-    68ccaaa17e1d   deepdiver/icap-clamav-service   "/entrypoint.sh"         About an hour ago   Up About an hour                                                                                        icap
-    41a34f33c8e7   bkimminich/juice-shop           "/nodejs/bin/node /j…"   About an hour ago   Up About an hour             3000/tcp                                                                   juiceshop
-    7cbba7dd10cd   nsherron/suricata               "sh /srv/layer3-init…"   About an hour ago   Up About an hour                                                                                        layer3
+    sudo netplan apply
     ```
+
+- **Step 6**: Initiate the Docker Compose. Within the *./sslo-consolidates-services/udf* folder, execute the following to build the docker containers:
+
+  ```
+  docker-compose -f docker-services-all.yaml up -d
+  ```
+    
+  You should see each of the containers pull down objects. Once complete, verify the containers are running:
+
+  ```  
+  docker ps
+  ```
+    
+  Your output should look something like this:
+    
+  ```
+  CONTAINER ID   IMAGE                           COMMAND                  CREATED          STATUS                    PORTS                                                                      NAMES
+  b62d3e72e2a3   guacamole/guacamole             "/opt/guacamole/bin/…"   11 minutes ago   Up 11 minutes             0.0.0.0:8080->8080/tcp, :::8080->8080/tcp                                  guacamole_compose
+  7130148e745f   nginx:alpine                    "/docker-entrypoint.…"   11 minutes ago   Up 11 minutes             80/tcp, 0.0.0.0:8443->8443/tcp, :::8443->8443/tcp                          nginx
+  958cebb5f14c   deepdiver/icap-clamav-service   "/entrypoint.sh"         11 minutes ago   Up 11 minutes                                                                                        icap
+  08aca884d8c8   bkimminich/juice-shop           "/nodejs/bin/node /j…"   11 minutes ago   Up 11 minutes             3000/tcp                                                                   juiceshop
+  973a1023ca4b   httpd:2.4                       "sh /srv/webserver-i…"   11 minutes ago   Up 11 minutes             0.0.0.0:80->80/tcp, :::80->80/tcp, 0.0.0.0:443->443/tcp, :::443->443/tcp   apache
+  3980900adfe3   postgres:13.4-buster            "docker-entrypoint.s…"   11 minutes ago   Up 11 minutes             5432/tcp                                                                   postgres_guacamole_compose
+  3f3e0a6410d3   nsherron/suricata               "sh /srv/layer3-init…"   11 minutes ago   Up 11 minutes                                                                                        layer3
+  ae0af4b38481   datadog/squid                   "/sbin/entrypoint.sh…"   11 minutes ago   Up 11 minutes             0.0.0.0:3128->3128/tcp, :::3128->3128/tcp                                  explicit-proxy
+  c26e78acb75e   guacamole/guacd                 "/bin/sh -c '/usr/lo…"   11 minutes ago   Up 11 minutes (healthy)   4822/tcp                                                                   guacd_compose
+  ```
 
 - **Step 8**: Configure SSL Orchestrator to use these services. 
 
@@ -198,4 +203,3 @@ Minimum requirements:
   sudo rm -rm ./configs/webrdp/data/guacamole/
   docker-compose -f docker-services-all.yaml up -d
   ```
-  
