@@ -211,3 +211,12 @@ Minimum requirements:
   sudo rm -rm ./configs/webrdp/data/guacamole/
   docker-compose -f docker-services-all.yaml up -d
   ```
+
+  To create an Access Method assignment in UDF:
+  - Label: WebRDP
+  - Protocol: HTTPS
+  - Instance Access: select the management IP address
+  - Instance Port: 8080
+  - SSL: disabled
+  - Unauthenticated: enabled
+  - Path: guacamole
