@@ -220,3 +220,16 @@ Minimum requirements:
   - SSL: disabled
   - Unauthenticated: enabled
   - Path: guacamole
+
+-------------------
+
+**Note**: If you get an error launching the Guacamole UI, you likely also need to update Docker-Compose. This environment minimally requires docker-compose version 1.29 and higher.
+
+```
+docker-compose version
+sudo apt update
+sudo apt upgrade
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+docker-compose version
+```
