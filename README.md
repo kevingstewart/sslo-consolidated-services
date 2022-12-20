@@ -5,5 +5,3 @@ Docker compose configurations to create all of the SSLO security services on a s
 This tool is built for the following use cases:
 
 - **UDF**: configuration for F5 UDF environment
-
-- **AWS**: (coming soon)
