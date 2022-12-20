@@ -20,14 +20,15 @@ services:
       - '3128:3128'
     restart: unless-stopped
     container_name: explicit-proxy
-    image: datadog/squid
+    image: sameersbn/squid:3.5.27-2
     cap_add:
       - NET_ADMIN
     volumes:
-      - "/srv/docker/squid/cache:/var/spool/squid"
+      - "./squid/config/squid.conf:/etc/squid/squid.conf"      
       - "./configs:/srv"
-      - "/var/log/squid:/var/log/squid"
     command: sh /srv/eproxy-init.sh
+    environment:
+      - TZ=UTC
     networks:
       default: {}
       eproxy-net-in:
