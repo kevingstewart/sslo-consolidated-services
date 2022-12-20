@@ -10,6 +10,9 @@ services:
     image: deepdiver/icap-clamav-service
     cap_add:
       - NET_ADMIN
+    volumes:
+      - "./configs:/srv"
+    command: sh /srv/icap-init.sh
     networks:
       icap-net-in:
         ipv4_address: 198.19.97.50
