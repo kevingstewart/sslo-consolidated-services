@@ -111,15 +111,15 @@ Minimum requirements:
     
   ```
   CONTAINER ID   IMAGE                           COMMAND                  CREATED          STATUS                    PORTS                                                                            NAMES
-c8f206075a60   guacamole/guacamole             "/opt/guacamole/bin/…"   39 minutes ago   Up 38 minutes             0.0.0.0:8080->8080/tcp, :::8080->8080/tcp                                        guacamole_compose
-f13e3d20b611   bkimminich/juice-shop           "/nodejs/bin/node /j…"   39 minutes ago   Up 39 minutes             3000/tcp                                                                         juiceshop
-5eb56cc827bb   nsherron/suricata               "sh /srv/layer3-init…"   39 minutes ago   Up 38 minutes                                                                                              layer3
-76b599c24009   deepdiver/icap-clamav-service   "/entrypoint.sh sh /…"   39 minutes ago   Up 39 minutes                                                                                              icap
-69dfc17176c2   postgres:13.4-buster            "docker-entrypoint.s…"   39 minutes ago   Up 39 minutes             5432/tcp                                                                         postgres_guacamole_compose
-9011436c8c74   sameersbn/squid:3.5.27-2        "/sbin/entrypoint.sh…"   39 minutes ago   Up 38 minutes             0.0.0.0:3128->3128/tcp, :::3128->3128/tcp                                        explicit-proxy
-25d9b1d410d4   httpd:2.4                       "sh /srv/webserver-i…"   39 minutes ago   Up 39 minutes             0.0.0.0:80->80/tcp, :::80->80/tcp, 0.0.0.0:443->443/tcp, :::443->443/tcp         apache
-c20883c0ca0d   nginx:alpine                    "/docker-entrypoint.…"   39 minutes ago   Up 39 minutes             80/tcp, 0.0.0.0:8443->8443/tcp, :::8443->8443/tcp                                nginx
-705b2f7bc697   guacamole/guacd                 "/bin/sh -c '/usr/lo…"   39 minutes ago   Up 39 minutes (healthy)   4822/tcp                                                                         guacd_compose
+  c8f206075a60   guacamole/guacamole             "/opt/guacamole/bin/…"   39 minutes ago   Up 38 minutes             0.0.0.0:8080->8080/tcp, :::8080->8080/tcp                                        guacamole_compose
+  f13e3d20b611   bkimminich/juice-shop           "/nodejs/bin/node /j…"   39 minutes ago   Up 39 minutes             3000/tcp                                                                         juiceshop
+  5eb56cc827bb   nsherron/suricata               "sh /srv/layer3-init…"   39 minutes ago   Up 38 minutes                                                                                              layer3
+  76b599c24009   deepdiver/icap-clamav-service   "/entrypoint.sh sh /…"   39 minutes ago   Up 39 minutes                                                                                              icap
+  69dfc17176c2   postgres:13.4-buster            "docker-entrypoint.s…"   39 minutes ago   Up 39 minutes             5432/tcp                                                                         postgres_guacamole_compose
+  9011436c8c74   sameersbn/squid:3.5.27-2        "/sbin/entrypoint.sh…"   39 minutes ago   Up 38 minutes             0.0.0.0:3128->3128/tcp, :::3128->3128/tcp                                        explicit-proxy
+  25d9b1d410d4   httpd:2.4                       "sh /srv/webserver-i…"   39 minutes ago   Up 39 minutes             0.0.0.0:80->80/tcp, :::80->80/tcp, 0.0.0.0:443->443/tcp, :::443->443/tcp         apache
+  c20883c0ca0d   nginx:alpine                    "/docker-entrypoint.…"   39 minutes ago   Up 39 minutes             80/tcp, 0.0.0.0:8443->8443/tcp, :::8443->8443/tcp                                nginx
+  705b2f7bc697   guacamole/guacd                 "/bin/sh -c '/usr/lo…"   39 minutes ago   Up 39 minutes (healthy)   4822/tcp                                                                         guacd_compose
   ```
 
 - **Step 7**: Configure SSL Orchestrator to use these services. 
