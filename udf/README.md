@@ -9,6 +9,8 @@ This Docker Compose configuration supports the **F5 UDF** demo environment, whic
 
 - Now includes a **Guacamole** instance for web-based RDP connections into RDP hosts.
 
+- Now includes a **Splunk** instance for SSL Orchestrator forensic logging.
+
 ### Installation / Instructions
 Perform the following steps to create the consolidated services architecture on an Ubuntu 18.04 (server) VM. 
 
@@ -18,7 +20,7 @@ Minimum requirements:
 
 -------------------
 
-**Note that connections to inline services in this architecture is now different than in original SSLO UDF blueprints.** 
+**Note that connections to inline services in this architecture is now different than in original SSL Orchestrator UDF blueprints.** 
 
 **Please see *sslo-configuration-info.md* for information on setting up SSL Orchestrator with these new consolidated services**
 
@@ -233,3 +235,9 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 docker-compose version
 ```
+
+-------------------
+
+- **Extra: Splunk**: The Splunk instance will come up with an empty configuration, and no objects are build on the BIG-IP to send logs to it. To configure this, refer to the following instructions: https://github.com/kevingstewart/f5_sslo_telemetry/tree/main/observability-tools/splunk.
+
+
