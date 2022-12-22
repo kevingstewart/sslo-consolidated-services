@@ -169,12 +169,9 @@ services:
       SPLUNK_LICENSE_URI: 'Free'
     networks:
       default: {}
-      webserver-net-in:
-        ipv4_address: 192.168.100.250
     volumes:
       - "./certs/splunk.crt:/home/splunk.crt"
-      - "./certs/splunk.key:/home/splunk.key"
-        #- "./configs/splunk-site.yml:/opt/ansible/site.yml"
+      - "./certs/splunk.pemk:/home/splunk.key"
     ports:
       - 9000:8000
       - 9088:8088
