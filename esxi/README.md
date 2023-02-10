@@ -18,13 +18,13 @@ This Docker Compose configuration supports a **VMware vSphere ESXi** demo enviro
 ### Minimum software requirements
 This environment requires the following software minimums 
 
-| Software      	   | Min    	|
-|--------------------|----------|
-| vSphere/ESXi   	   | 6.5    	|
-| Docker         	   | 20.10  	|
-| Docker-Compose 	   | 1.29   	|
-| Ubuntu         	   | 18.04  	|
-| F5-BIG-IP      	   | 15.1.0 	|
+| Software                | Minimum |
+|-------------------------|---------|
+| vSphere/ESXi            | 6.5     |
+| Docker                  | 20.10   |
+| Docker-Compose          | 1.29    |
+| Ubuntu                  | 18.04   |
+| F5-BIG-IP               | 15.1.0  |
 
 -------------------
 
