@@ -13,6 +13,8 @@ This Docker Compose configuration supports a **VMware vSphere ESXi** demo enviro
 
 - Now includes a **Splunk** instance for SSL Orchestrator forensic logging.
 
+-------------------
+
 ### Installation / Instructions
 Perform the following steps to create the consolidated services architecture on an Ubuntu 18.04 (server) VM. 
 
