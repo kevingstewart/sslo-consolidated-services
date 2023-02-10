@@ -15,13 +15,14 @@ This Docker Compose configuration supports a **VMware vSphere ESXi** demo enviro
 
 -------------------
 
-### Installation / Instructions
-Perform the following steps to create the consolidated services architecture on an Ubuntu 18.04 (server) VM. 
+### Minimum software requirements
+This environment requires the following software minimums 
 
-Minimum requirements:
 - vSphere/ESXi += 6.5
 - docker >= 20.10
 - docker-compose >= 1.29
+- Ubuntu >= 18.04
+- F5 BIG-IP >= 15.1.0
 
 -------------------
 
@@ -51,8 +52,6 @@ Use the following requirements to configure VM instances in ESXi
       - Security: MAC address changes: Accept
       - Security: Forged transmits: Accept
 
-<br />
-
 - **BIG-IP VM instances**
   - 4 CPU
   - 2 Cores per socket (2 sockets)
@@ -64,8 +63,6 @@ Use the following requirements to configure VM instances in ESXi
     - Layer 3 Network
     - L2 Service In Network
     - L2 Service Out Network
-
-<br />
 
 - **Security services instances**
   - 2 CPU
@@ -82,8 +79,6 @@ Use the following requirements to configure VM instances in ESXi
     - Docker >= 20.10
     - Docker-Compose >= 1.29
 
-<br />
-
 - **Client instances**
   - 2 CPU
   - 4 GB memory
@@ -98,6 +93,9 @@ Use the following requirements to configure VM instances in ESXi
     - OpenSSL
 
 -------------------
+-------------------
+-------------------
+
 
 **Please see *sslo-configuration-info.md* for information on setting up SSL Orchestrator with these new consolidated services**
 
