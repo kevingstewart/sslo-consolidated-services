@@ -1,0 +1,46 @@
+version: '3.3'
+services:
+
+  # SSLO Security Service: HTTP Proxy (transparent)
+  transparent-proxy-service:
+    ports:
+      - '3128:3128'
+    restart: unless-stopped
+    container_name: transparent-proxy
+    image: sameersbn/squid:3.5.27-2
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - "./squid/config/tsquid.conf:/etc/squid/squid.conf"      
+      - "./configs:/srv"
+    command: sh /srv/tproxy-init.sh
+    environment:
+      - TZ=UTC
+    networks:
+      default: {}
+      tproxy-net-in:
+        ipv4_address: 198.19.96.30
+      tproxy-net-out:
+        ipv4_address: 198.19.96.130
+
+networks:
+  default:
+    driver: bridge
+
+  tproxy-net-in:
+    driver: macvlan
+    driver_opts:
+      parent: ens6.30
+    ipam:
+      driver: default
+      config:
+        - subnet: 198.19.96.0/25
+
+  tproxy-net-out:
+    driver: macvlan
+    driver_opts:
+      parent: ens6.40
+    ipam:
+      driver: default
+      config:
+        - subnet: 198.19.96.128/25
