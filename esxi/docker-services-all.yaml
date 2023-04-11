@@ -106,77 +106,6 @@ services:
       - "./certs/server.crt:/ssl/server.crt"
       - "./certs/server.key:/ssl/server.key"
 
-  # Additional Services: Guacamole Daemon
-  guacd:
-    image: guacamole/guacd
-    container_name: guacd_compose
-    networks:
-      default: {}
-    restart: unless-stopped
-    volumes:
-      - ./configs/webrdp/drive:/drive:rw
-      - ./configs/webrdp/record:/record:rw
-
-  # Additional Services: Guacamole Postgres Database
-  postgres:
-    image: postgres:13.4-buster
-    container_name: postgres_guacamole_compose
-    environment:
-      PGDATA: /var/lib/postgresql/data/guacamole
-      POSTGRES_DB: guacamole_db
-      POSTGRES_PASSWORD: 'password'
-      POSTGRES_USER: guacamole_user
-    networks:
-      default: {}
-    restart: unless-stopped
-    volumes:
-      - ./configs/webrdp/init:/docker-entrypoint-initdb.d:z
-      - ./configs/webrdp/data:/var/lib/postgresql/data:Z
-
-  # Additional Services: Guacamole
-  guacamole:
-    container_name: guacamole_compose
-    depends_on:
-      - guacd
-      - postgres
-    environment:
-      GUACD_HOSTNAME: guacd
-      POSTGRES_DATABASE: guacamole_db
-      POSTGRES_HOSTNAME: postgres
-      POSTGRES_PASSWORD: 'password'
-      POSTGRES_USER: guacamole_user
-    image: guacamole/guacamole
-    links:
-      - guacd
-    networks:
-      default: {}
-    ports:
-      - 8080:8080/tcp
-    restart: unless-stopped
-
-  # splunk
-  splunk:
-    container_name: splunk
-    image: splunk/splunk:latest
-    environment:
-      SPLUNK_HTTP_ENABLESSL: 'true'
-      SPLUNK_HTTP_ENABLESSL_CERT: '/home/splunk.crt'
-      SPLUNK_HTTP_ENABLESSL_PRIVKEY: '/home/splunk.key'
-      SPLUNK_HTTP_ENABLESSL_PRIVKEY_PASSWORD: 'password'
-      SPLUNK_START_ARGS: '--accept-license'
-      SPLUNK_USER: 'root'
-      SPLUNK_PASSWORD: 'P@ssword!'
-      SPLUNK_LICENSE_URI: 'Free'
-    networks:
-      default: {}
-    volumes:
-      - "./certs/splunk.crt:/home/splunk.crt"
-      - "./certs/splunk.pemk:/home/splunk.key"
-    ports:
-      - 9000:8000
-      - 9088:8088
-    restart: unless-stopped
-
 networks:
   default:
     driver: bridge
@@ -184,7 +113,7 @@ networks:
   icap-net-in:
     driver: macvlan
     driver_opts:
-      parent: ens6.50
+      parent: ${L3NET}.50
     ipam:
       driver: default
       config:
@@ -193,7 +122,7 @@ networks:
   eproxy-net-in:
     driver: macvlan
     driver_opts:
-      parent: ens6.30
+      parent: ${L3NET}.30
     ipam:
       driver: default
       config:
@@ -202,7 +131,7 @@ networks:
   eproxy-net-out:
     driver: macvlan
     driver_opts:
-      parent: ens6.40
+      parent: ${L3NET}.40
     ipam:
       driver: default
       config:
@@ -211,7 +140,7 @@ networks:
   layer3-net-in:
     driver: macvlan
     driver_opts:
-      parent: ens6.60
+      parent: ${L3NET}.60
     ipam:
       driver: default
       config:
@@ -220,7 +149,7 @@ networks:
   layer3-net-out:
     driver: macvlan
     driver_opts:
-      parent: ens6.70
+      parent: ${L3NET}.70
     ipam:
       driver: default
       config:
@@ -229,7 +158,7 @@ networks:
   webserver-net-in:
     driver: macvlan
     driver_opts:
-      parent: ens6.80
+      parent: ${L3NET}.80
     ipam:
       driver: default
       config:
