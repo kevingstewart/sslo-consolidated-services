@@ -186,17 +186,36 @@ Use the following requirements to configure VM instances in ESXi
         ```
         sudo netplan apply
 
-        echo 0 | sudo tee /proc/sys/net/bridge/bridge-nf-call-arptables
-        echo 0 | sudo tee /proc/sys/net/bridge/bridge-nf-call-iptables
-        echo 0 | sudo tee /proc/sys/net/bridge/bridge-nf-call-ip6tables
-
         sudo tee -a /etc/sysctl.conf <<EOF
         net.bridge.bridge-nf-call-ip6tables = 0
         net.bridge.bridge-nf-call-iptables = 0
         net.bridge.bridge-nf-call-arptables = 0
         EOF
+        
+        sudo tee -a /usr/bin/disable-bridge-processing <<EOF
+        #!/bin/sh
+        until [ -f /proc/sys/net/bridge/bridge-nf-call-iptables ]
+        do
+           sleep 5
+        done
+        /usr/sbin/sysctl -p /etc/sysctl.conf
+        exit
+        EOF
 
-        sudo sysctl -p /etc/sysctl.conf
+        sudo tee -a /etc/systemd/system/disable-bridge-processing.service <<EOF
+        [Unit]
+        Description=Disable iptables bridge processing
+
+        [Service]
+        Type=oneshot
+        ExecStart=/usr/bin/disable-bridge-processing
+
+        [Install]
+        WantedBy=multi-user.target
+        EOF
+
+        sudo chmod 755 /usr/bin/disable-bridge-processing
+        sudo systemctl enable --now disable-bridge-processing.service
         ```
 
       - *Reboot*
