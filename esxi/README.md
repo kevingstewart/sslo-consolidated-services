@@ -29,11 +29,11 @@ This environment requires the following software minimums
 -------------------
 
 ### Virtualization Requirements
-Use the following requirements to configure VM instances in ESXi
+<span style="color: red;">Use the following requirements to configure VM instances in ESXi</span>
 
-- **ESXi environment**
+- <span style="color: red;">ESXi environment</span>
   - Minimums
-    - <span style="color:blue">vSphere/esxi version: >= 6.5</span>
+    - vSphere/esxi version: >= 6.5
     - Memory: >= 32Gb
     - Storage: >= 1 TB
   - Networking
