@@ -5,7 +5,7 @@ A Docker Compose configuration to create all of the SSLO security services on a 
 - Server (Ubuntu - contains all of the security service functions)
 
 ### About
-This Docker Compose configuration supports a **VMware vSphere ESXi** demo environment, which itself supports 802.1Q VLAN tags. This also reduces the number of physical interfaces and connections required. The Docker Compose file contains all of the layer 3 services (ICAP, explicit proxy, layer 3 service, and web servers). Layer 2 and TAP services are defined directly on the host system and described in the "layer2-tap-config" readme file.
+This Docker Compose configuration supports a **VMware vSphere ESXi** demo environment, which itself supports 802.1Q VLAN tags. This also reduces the number of physical interfaces and connections required. The Docker Compose file contains all of the layer 3 services (ICAP, explicit proxy, layer 3 service, and web servers).
 
 #### Update
 - Now includes a **Owasp Juice Shop** for AWAF vulnerability testing.
