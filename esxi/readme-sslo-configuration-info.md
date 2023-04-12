@@ -17,33 +17,33 @@ In the SSL Orchestrator configuration, create the following security services:
   - Auto Manage Addresses: enabled
   - To Service Configuration:
     - Self-IP: 198.19.64.7/25
-    - Create new VLAN on interface **ESXi L3 Network - Tag 60**
+    - Create new VLAN on interface **(ESXi L3 Network interface) - Tag 60**
   - Security Devices:
     - 198.19.64.30
   - From Service Configuration:
     - Self-IP: 198.19.64.245/25
-    - Create new VLAN on interface **ESXi L3 Network - Tag 70**
+    - Create new VLAN on interface **(ESXi L3 Network interface) - Tag 70**
 
 - **Explicit Proxy Service**:
   - Auto Manage Addresses: enabled
   - To Service Configuration:
     - Self-IP: 198.19.96.7/25
-    - Create new VLAN on interface **ESXi L3 Network - Tag 30**
+    - Create new VLAN on interface **(ESXi L3 Network interface) - Tag 30**
   - Security Devices:
     - 198.19.96.30
   - From Service Configuration:
     - Self-IP: 198.19.96.245/25
-    - Create new VLAN on interface **ESXi L3 Network - Tag 40**
+    - Create new VLAN on interface **(ESXi L3 Network interface) - Tag 40**
 
 - **Layer 2 Service**:
   - To Service Configuration:
-    - To-service: interface **ESXi L2 In Network**
+    - To-service: interface **(ESXi L2 In Network interface)**
   - From Service Configuration:
-    - From-service: interface **ESXi L2 Out Network**
+    - From-service: interface **(ESXi L2 Out Network interface)**
 
 - **TAP Service**:
   - To Service Configuration:
-    - To-service: interface **ESXi TAP Network**
+    - To-service: interface **(ESXi TAP Network interface)**
 
 - **Web Servers**:
   - 192.168.100.10 (supports http:80 and https:443)
