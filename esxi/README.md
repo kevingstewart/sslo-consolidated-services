@@ -1,5 +1,3 @@
-# IN DEVELOPMENT
-
 # SSL Orchestrator Consolidated Services Architecture (ESXi Version)
 A Docker Compose configuration to create all of the SSLO security services on a single Ubuntu 20.04+ instance, to both simplify and dramatically reduce resource utlization in a virtual environment. This environment requires a total of three VM instances:
 - F5 BIG-IP
