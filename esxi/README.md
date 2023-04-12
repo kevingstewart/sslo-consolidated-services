@@ -285,6 +285,7 @@ Use the following requirements to configure VM instances in ESXi
     - ICAP - uses the L3 Network interface, VLAN tag 50, IP: 198.19.97.50, port: 1344
 
 
+<br />
 -------------------
 -------------------
 -------------------
