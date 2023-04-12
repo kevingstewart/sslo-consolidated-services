@@ -6,44 +6,44 @@ The interfaces used in this new consolidated architecture are different than tho
 
 In the SSL Orchestrator configuration, create the following security services:
 
-- **ICAP**: 
+- **ICAP Service**: 
   - ICAP Devices: 198.19.97.50:1344
   - Request Modification URI Path: /avscan
   - Response Modification URI Path: /avscan
   - Preview Max Length: 1048576
   - Note: The SSL Orchestrator "Lite" UDF blueprint has the ICAP VLAN and self-IP already defined.
 
-- **Layer3**:
+- **Layer 3 Service**:
   - Auto Manage Addresses: enabled
   - To Service Configuration:
     - Self-IP: 198.19.64.7/25
-    - Create new VLAN on interface **1.3 tag 60**
+    - Create new VLAN on interface **ESXi L3 Network - Tag 60**
   - Security Devices:
     - 198.19.64.30
   - From Service Configuration:
     - Self-IP: 198.19.64.245/25
-    - Create new VLAN on interface **1.3 tag 70**
+    - Create new VLAN on interface **ESXi L3 Network - Tag 70**
 
-- **Explicit Proxy**:
+- **Explicit Proxy Service**:
   - Auto Manage Addresses: enabled
   - To Service Configuration:
     - Self-IP: 198.19.96.7/25
-    - Create new VLAN on interface **1.3 tag 30**
+    - Create new VLAN on interface **ESXi L3 Network - Tag 30**
   - Security Devices:
     - 198.19.96.30
   - From Service Configuration:
     - Self-IP: 198.19.96.245/25
-    - Create new VLAN on interface **1.3 tag 40**
+    - Create new VLAN on interface **ESXi L3 Network - Tag 40**
 
-- **Layer2**:
+- **Layer 2 Service**:
   - To Service Configuration:
-    - To-service: interface **1.4**
+    - To-service: interface **ESXi L2 In Network**
   - From Service Configuration:
-    - From-service: interface **1.5**
+    - From-service: interface **ESXi L2 Out Network**
 
-- **TAP**:
+- **TAP Service**:
   - To Service Configuration:
-    - To-service: interface **1.6**
+    - To-service: interface **ESXi TAP Network**
 
 - **Web Servers**:
   - 192.168.100.10 (supports http:80 and https:443)
