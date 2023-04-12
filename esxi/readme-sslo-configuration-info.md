@@ -53,3 +53,41 @@ In the SSL Orchestrator configuration, create the following security services:
 
 - **Juiceshop**:
   - Pool: 192.168.100.200:443 (requires server SSL)
+
+<br />
+
+----------------------
+
+### Testing
+
+There are multiple options for showing decrypted traffic flowing across the security services:
+
+- tcpdump on the BIG-IP service VLANs
+- tcpdump on the service interfaces inside the service containers
+
+The latter is achieved by accessing the shell of each container. Do this from a shell on the consolidated services Ubuntu instance:
+
+- Inline L3 service
+  ```
+  docker exec -it layer3 /bin/bash
+  tcpdump -lnni eth1 not icmp and not arp
+  tcpdump -lnni eth1 -Xs0 not icmp and not arp
+  ```
+
+- Inline HTTP service
+  ```
+  docker exec -it explicit-proxy /bin/bash
+  tcpdump -lnni eth1 not icmp and not arp
+  tcpdump -lnni eth1 -Xs0 not icmp and not arp
+  ```
+
+Inline L2 and TAP services are accessible directly from the consolidated services VM host:
+
+- Inline L2
+  ```
+  sudo tcpdump -lnni ens161 -Xs0 not icmp and not arp
+  ```
+
+
+
+
