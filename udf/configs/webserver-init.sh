@@ -11,5 +11,6 @@ device=$(ip a |egrep -o 'inet 192.168.100\..*' | cut -d' ' -f7)
 ifconfig ${device}:0 192.168.100.11/24
 ifconfig ${device}:1 192.168.100.12/24
 ifconfig ${device}:2 192.168.100.13/24
+ifconfig ${device}:3 192.168.100.14/24
 
 /usr/local/bin/httpd-foreground
