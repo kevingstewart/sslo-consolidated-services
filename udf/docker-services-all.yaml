@@ -74,6 +74,8 @@ services:
     volumes:
       - "./certs/server.crt:/usr/local/apache2/conf/server.crt"
       - "./certs/server.key:/usr/local/apache2/conf/server.key"
+      - "./certs/bundle.crt:/usr/local/apache2/conf/bundle.crt"
+      - "./configs/httpd-ssl.conf:/usr/local/apache2/conf/extra/httpd-ssl.conf"
       - "./site:/usr/local/apache2/htdocs"
       - "./configs:/srv"
     command: sh /srv/webserver-init.sh
