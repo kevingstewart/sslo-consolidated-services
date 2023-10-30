@@ -1,0 +1,165 @@
+version: '3.3'
+services:
+
+  # SSLO Security Service: ICAP
+  icap-clamav-service:
+    ports:
+      - '1344:1344'
+    restart: unless-stopped
+    container_name: icap
+    image: deepdiver/icap-clamav-service
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - "./configs:/srv"
+    command: sh /srv/icap-init.sh
+    networks:
+      icap-net-in:
+        ipv4_address: 198.19.97.50
+
+  # SSLO Security Service: HTTP Proxy (explicit)
+  explicit-proxy-service:
+    ports:
+      - '3128:3128'
+    restart: unless-stopped
+    container_name: explicit-proxy
+    image: sameersbn/squid:3.5.27-2
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - "./squid/config/squid.conf:/etc/squid/squid.conf"      
+      - "./configs:/srv"
+    command: sh /srv/eproxy-init.sh
+    environment:
+      - TZ=UTC
+    networks:
+      default: {}
+      eproxy-net-in:
+        ipv4_address: 198.19.96.30
+      eproxy-net-out:
+        ipv4_address: 198.19.96.130
+
+  # SSLO Security Service: Inline Layer 3
+  layer3-service:
+    restart: unless-stopped
+    privileged: true
+    environment:
+      - INTERFACE=eth0
+    container_name: layer3
+    image: nsherron/suricata
+    cap_add:
+      - NET_ADMIN
+      - SYS_NICE
+    volumes:
+      - "./configs:/srv"
+    command: sh /srv/layer3-init.sh
+    networks:
+      default: {}
+      layer3-net-in:
+        ipv4_address: 198.19.64.30
+      layer3-net-out:
+        ipv4_address: 198.19.64.130
+
+  # Additional Services: HTTPS Web Server (Apache with sample website)
+  webserver-service:
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    container_name: apache
+    image: httpd:2.4
+    cap_add:
+      - NET_ADMIN
+      - SYS_NICE
+    volumes:
+      - "./certs/server.crt:/usr/local/apache2/conf/server.crt"
+      - "./certs/server.key:/usr/local/apache2/conf/server.key"
+      - "./site:/usr/local/apache2/htdocs"
+      - "./configs:/srv"
+    command: sh /srv/webserver-init.sh
+    networks:
+      default: {}
+      webserver-net-in:
+        ipv4_address: 192.168.100.10
+
+  # Additional Services: Juiceshop (WAF testing)
+  juiceshop:
+    image: bkimminich/juice-shop
+    container_name: juiceshop
+    expose:
+      - 3000
+    restart: unless-stopped
+
+  # Additional Services: NGINX (Juiceshop HTTPS frontend)
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - 8443:8443
+    networks:
+      default: {}
+      webserver-net-in:
+        ipv4_address: 192.168.100.200
+    volumes:
+      - "./configs/nginx.conf:/etc/nginx/nginx.conf"
+      - "./certs/server.crt:/ssl/server.crt"
+      - "./certs/server.key:/ssl/server.key"
+
+networks:
+  default:
+    driver: bridge
+
+  icap-net-in:
+    driver: macvlan
+    driver_opts:
+      parent: ${L3NET}.50
+    ipam:
+      driver: default
+      config:
+        - subnet: 198.19.97.0/25
+
+  eproxy-net-in:
+    driver: macvlan
+    driver_opts:
+      parent: ${L3NET}.30
+    ipam:
+      driver: default
+      config:
+        - subnet: 198.19.96.0/25
+
+  eproxy-net-out:
+    driver: macvlan
+    driver_opts:
+      parent: ${L3NET}.40
+    ipam:
+      driver: default
+      config:
+        - subnet: 198.19.96.128/25
+
+  layer3-net-in:
+    driver: macvlan
+    driver_opts:
+      parent: ${L3NET}.60
+    ipam:
+      driver: default
+      config:
+        - subnet: 198.19.64.0/25
+
+  layer3-net-out:
+    driver: macvlan
+    driver_opts:
+      parent: ${L3NET}.70
+    ipam:
+      driver: default
+      config:
+        - subnet: 198.19.64.128/25
+
+  webserver-net-in:
+    driver: macvlan
+    driver_opts:
+      parent: ${L3NET}.80
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.100.0/24
