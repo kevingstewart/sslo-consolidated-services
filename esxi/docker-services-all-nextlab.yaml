@@ -100,7 +100,7 @@ services:
     networks:
       default: {}
       webserver-net:
-        ipv4_address: 192.168.100.200
+        ipv4_address: 192.168.100.20
     volumes:
       - "./configs/nginx.conf:/etc/nginx/nginx.conf"
       - "./certs/server.crt:/ssl/server.crt"
