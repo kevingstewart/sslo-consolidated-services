@@ -79,6 +79,8 @@ services:
     command: sh /srv/webserver-init-next.sh
     networks:
       default: {}
+      webserver-net:
+        ipv4_address: 192.168.100.10
 
   # Additional Services: Juiceshop (WAF testing)
   juiceshop:
@@ -97,6 +99,8 @@ services:
       - 8443:8443
     networks:
       default: {}
+      webserver-net:
+        ipv4_address: 192.168.100.200
     volumes:
       - "./configs/nginx.conf:/etc/nginx/nginx.conf"
       - "./certs/server.crt:/ssl/server.crt"
@@ -151,3 +155,11 @@ networks:
       config:
         - subnet: 198.19.64.128/25
 
+  webserver-net:
+    driver: macvlan
+    driver_opts:
+      parent: ens161.80
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.100.0/24
