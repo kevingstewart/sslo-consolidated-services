@@ -39,6 +39,26 @@ services:
       eproxy-net-out:
         ipv4_address: 198.19.96.130
 
+  # SSLO Security Service: HTTP Proxy (transparent)
+  transparent-proxy-service:
+    restart: unless-stopped
+    container_name: transparent-proxy
+    image: sameersbn/squid:3.5.27-2
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - "./squid/config/tsquid.conf:/etc/squid/squid.conf" 
+      - "./configs:/srv"
+    command: sh /srv/tproxy-init-next.sh
+    environment:
+      - TZ=UTC
+    networks:
+      default: {}
+      tproxy-net-in:
+        ipv4_address: 198.19.98.30
+      tproxy-net-out:
+        ipv4_address: 198.19.98.130
+
   # SSLO Security Service: Inline Layer 3
   layer3-service:
     restart: unless-stopped
@@ -202,6 +222,24 @@ networks:
       driver: default
       config:
         - subnet: 198.19.64.128/25
+
+  tproxy-net-in:
+    driver: macvlan
+    driver_opts:
+      parent: ens6.10
+    ipam:
+      driver: default
+      config:
+        - subnet: 198.19.98.0/25
+
+  tproxy-net-out:
+    driver: macvlan
+    driver_opts:
+      parent: ens6.20
+    ipam:
+      driver: default
+      config:
+        - subnet: 198.19.98.128/25
 
   webserver-net:
     driver: macvlan
