@@ -1,7 +1,7 @@
 #!/bin/bash 
 
 apt update -y && apt upgrade -y
-apt install apt-utils net-tools iproute2 tcpdump vim nano iputils-ping -y
+apt install apt-utils net-tools iproute2 tcpdump vim nano iputils-ping dnsutils -y
 
 ip route delete default
 ip route add default via 198.19.96.245
