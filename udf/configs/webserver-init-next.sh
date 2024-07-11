@@ -6,6 +6,8 @@ apt install apt-utils net-tools iproute2 -y
 sed -ie 's/^#\(Include .*httpd-ssl.conf\)/\1/' /usr/local/apache2/conf/httpd.conf
 sed -ie 's/^#\(LoadModule .*mod_ssl.so\)/\1/' /usr/local/apache2/conf/httpd.conf
 sed -ie 's/^#\(LoadModule .*mod_socache_shmcb.so\)/\1/' /usr/local/apache2/conf/httpd.conf
+sed -ie 's/^#\(LoadModule .*mod_http2.so\)/\1/' /usr/local/apache2/conf/httpd.conf
+echo "Protocols h2 h2c http/1.1" >> /usr/local/apache2/conf/extra/httpd-ssl.conf
 
 device=$(ip a |egrep -o 'inet 192.168.100\..*' | cut -d' ' -f7)
 ifconfig ${device}:0 192.168.100.11/24
