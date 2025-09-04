@@ -1,5 +1,5 @@
 services:
-  service-layer:
+  service-tap:
     container_name: service-tap
     image: service-tap
     privileged: true
