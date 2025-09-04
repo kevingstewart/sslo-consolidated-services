@@ -1,0 +1,42 @@
+services:
+  service-layer3:
+    container_name: service-layer3
+    image: service-layer3
+    #user: root
+    build:
+      context: .
+      dockerfile: service-layer3.dockerfile
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+      - SYS_NICE
+    environment:
+      - ARG_SVC_GATEWAY=198.19.64.245
+      - ARG_CLIENT_SUBNET=10.1.10.0/24
+      - ARG_SVC_INGRESS=198.19.64.7
+      - INTERFACE=eth1
+    restart: unless-stopped
+    networks:
+      default: {}
+      net-layer3-in:
+        ipv4_address: 198.19.64.30
+      net-layer3-out:
+        ipv4_address: 198.19.64.130
+
+networks:
+  net-layer3-in:
+    driver: macvlan
+    driver_opts:
+      parent: ens6.60
+    ipam:
+      driver: default
+      config:
+        - subnet: 198.19.64.0/25
+  net-layer3-out:
+    driver: macvlan
+    driver_opts:
+      parent: ens6.70
+    ipam:
+      driver: default
+      config:
+        - subnet: 198.19.64.128/25
