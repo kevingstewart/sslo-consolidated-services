@@ -1,0 +1,25 @@
+services:
+  utility-wireshark:
+    image: lscr.io/linuxserver/wireshark:latest
+    container_name: utility-wireshark
+    cap_add:
+      - NET_ADMIN
+    security_opt:
+      - seccomp:unconfined
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    networks:
+      default: {}
+      net-wireshark-in: {}
+
+networks:
+  net-wireshark-in:
+    driver: macvlan
+    driver_opts:
+      parent: ens7
+      macvlan_mode: passthru
