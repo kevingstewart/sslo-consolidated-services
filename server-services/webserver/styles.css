@@ -1,0 +1,113 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Segoe UI', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+}
+header {
+    background-image: url('images/main.jpeg');
+    background-repeat: no-repeat;
+    background-position:  center center;
+    background-size: cover;
+    height: 100vh;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: rgba(0, 0, 0, 0.5);
+}
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+.hero {
+    text-align: center;
+    margin: auto;
+}
+.hero h2 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+.btn {
+    display: inline-block;
+    padding: 0.7rem 1.5rem;
+    background: #ff6f61;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 1rem;
+}
+section {
+    padding: 4rem 2rem;
+    text-align: center;
+}
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+}
+.card {
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 300px;
+}
+.card img {
+    width: 100%;
+    border-radius: 5px 5px 0 0;
+}
+.card h3 {
+    padding: 1rem;
+}
+blockquote {
+    margin: 1rem auto;
+    max-width: 600px;
+    font-style: italic;
+    background: #fff;
+    padding: 1rem;
+    border-left: 5px solid #ff6f61;
+}
+form {
+    max-width: 500px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+form input, form textarea {
+    padding: 0.7rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+form button {
+    padding: 0.7rem;
+    background: #ff6f61;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
