@@ -1,0 +1,25 @@
+services:
+  service-layer:
+    container_name: service-tap
+    image: service-tap
+    privileged: true
+    build:
+      context: .
+      dockerfile: service-tap.dockerfile
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+      - SYS_NICE
+    environment:
+      - INTERFACE=eth1
+    restart: unless-stopped
+    networks:
+      default: {}
+      net-tap-in: {}
+
+networks:
+  net-tap-in:
+    driver: macvlan
+    driver_opts:
+      parent: ens7
+      macvlan_mode: passthru
