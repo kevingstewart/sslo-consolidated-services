@@ -1,0 +1,27 @@
+services:
+  service-icap:
+    container_name: service-icap
+    image: service-icap
+    user: root
+    build:
+      context: .
+      dockerfile: service-icap.dockerfile
+    environment:
+      - ARG_LOCAL_SYSLOG=utility-syslogview
+    ports:
+      - "1344:1344"
+    restart: unless-stopped
+    networks:
+      default: {}
+      net-icap-in:
+        ipv4_address: 198.19.97.50
+
+networks:
+  net-icap-in:
+    driver: macvlan
+    driver_opts:
+      parent: ens6.50
+    ipam:
+      driver: default
+      config:
+        - subnet: 198.19.97.0/25
