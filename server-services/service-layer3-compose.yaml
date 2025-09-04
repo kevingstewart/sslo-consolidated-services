@@ -2,7 +2,6 @@ services:
   service-layer3:
     container_name: service-layer3
     image: service-layer3
-    #user: root
     build:
       context: .
       dockerfile: service-layer3.dockerfile
