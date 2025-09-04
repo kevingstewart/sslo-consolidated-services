@@ -1,0 +1,21 @@
+## Web Server Service (self-contained)
+## Exposes :80 http
+## Exposes :443 https
+## Exposes :444 https-pqc
+
+services:
+  utility-webserver:
+    container_name: utility-webserver
+    image: utility-webserver
+    build:
+      context: .
+      dockerfile: utility-webserver.dockerfile
+    restart: unless-stopped
+    ports:
+      - 8080:80
+      - 9443:443
+      - 9444:444
+    networks:
+      default: {}
+      webserver-net:
+        ipv4_address: 192.168.100.10
