@@ -1,0 +1,43 @@
+services:
+  service-proxy-transparent:
+    container_name: service-proxy-transparent
+    image: service-proxy-transparent
+    cap_add:
+      - NET_ADMIN
+      - SYS_ADMIN
+    privileged: true
+    build:
+      context: .
+      dockerfile: service-proxy-transparent.dockerfile
+    restart: unless-stopped
+    environment:
+      - TZ=UTC
+      - UPDATE_EP=1
+      - ARG_SVC_GATEWAY=198.19.98.245
+      - ARG_CLIENT_SUBNET=10.1.10.0/24
+      - ARG_SVC_INGRESS=198.19.98.7
+    networks:
+      default: {}
+      net-proxy-t-in:
+        ipv4_address: 198.19.98.30
+      net-proxy-t-out:
+        ipv4_address: 198.19.98.130
+
+networks:
+  net-proxy-t-in:
+    driver: macvlan
+    driver_opts:
+      parent: ens6.10
+    ipam:
+      driver: default
+      config:
+        - subnet: 198.19.98.0/25
+
+  net-proxy-t-out:
+    driver: macvlan
+    driver_opts:
+      parent: ens6.20
+    ipam:
+      driver: default
+      config:
+        - subnet: 198.19.98.128/25
