@@ -1,0 +1,13 @@
+## JuiceShop Service
+## Exposes :3000 http
+
+services:
+  utility-juiceshop:
+    container_name: utility-juiceshop
+    image: bkimminich/juice-shop
+    expose:
+      - 3000
+    restart: unless-stopped
+    networks:
+      webserver-net:
+        ipv4_address: 192.168.100.20
