@@ -15,11 +15,34 @@ services:
     restart: unless-stopped
     networks:
       default: {}
-      net-tap-in: {}
+      net-tap-in-1: {}
+
+  service-tap-wireshark:
+    image: lscr.io/linuxserver/wireshark:latest
+    container_name: service-tap-wireshark
+    cap_add:
+      - NET_ADMIN
+    security_opt:
+      - seccomp:unconfined
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    networks:
+      default: {}
+      net-tap-in-2: {}
 
 networks:
-  net-tap-in:
+  net-tap-in-1:
     driver: macvlan
     driver_opts:
-      parent: ens7
+      parent: ens7.1000
+      macvlan_mode: passthru
+  net-tap-in-2:
+    driver: macvlan
+    driver_opts:
+      parent: ens7.1001
       macvlan_mode: passthru
