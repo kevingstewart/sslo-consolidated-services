@@ -1,0 +1,19 @@
+services:
+  utility-webrdp:
+    container_name: utility-webrdp
+    image: utility-webrdp
+    build:
+      context: .
+      dockerfile: utility-webrdp.dockerfile
+    environment:
+      - ARG_RDP_HOST=10.1.1.4
+      - ARG_RDP_PORT=3389
+      - ARG_RDP_USER=student
+      - ARG_RDP_PASS=agility
+      - ARG_GUAC_USER=user
+      - ARG_GUAC_PASS=user
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+    networks:
+      default: {}
