@@ -1,0 +1,6 @@
+include:
+  - client-services/utility-webrdp-compose.yaml
+
+networks:
+  default:
+    driver: bridge
