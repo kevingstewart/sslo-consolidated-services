@@ -265,6 +265,8 @@ echo "Loading initdb.sql with provided user/host data"
 psql -d postgres -U guacamole -d guacamole_db -f /config/db_check/initdb.sql
 EOF
 
+RUN chmod +x /usr/local/bin/_post_startup.sh
+
 WORKDIR /config
 
 # Set the entrypoint
