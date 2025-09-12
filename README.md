@@ -38,7 +38,7 @@ sudo usermod -aG docker ${USER}
 ```
 ----
 
-### Docker Server Instance
+### Server Instance
 
 * **Step 1**: Configure the Ubuntu server instance with the following interfaces:
 
@@ -141,7 +141,7 @@ sudo usermod -aG docker ${USER}
 
 ----
 
-### Docker Client Instance
+### Client Instance
 
 * **Step 1**: Download the configuration package:
 
