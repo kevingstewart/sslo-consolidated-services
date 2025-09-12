@@ -191,6 +191,10 @@ Below find the configuration details for all of the containers maintained in thi
   ```
 * Testing Suricata:
   * Reference: [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-install-suricata-on-ubuntu-20-04)
+  * Access the container shell:
+    ```bash
+    docker exec -it service-layer3 /bin/bash
+    ```
   * Tail the Suricate fast log:
     ```bash
     tail -f /var/log/suricata/fast.log
@@ -390,6 +394,10 @@ Below find the configuration details for all of the containers maintained in thi
   ```
 * Testing Suricata:
   * Reference: [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-install-suricata-on-ubuntu-20-04)
+  * Access the container shell:
+    ```bash
+    docker exec -it service-tap /bin/bash
+    ```
   * Tail the Suricate fast log:
     ```bash
     tail -f /var/log/suricata/fast.log
