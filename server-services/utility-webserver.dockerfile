@@ -43,7 +43,7 @@ RUN ./config --prefix=${OPENSSL_PREFIX} --openssldir=${OPENSSL_PREFIX}/ssl --lib
 ENV PATH="${OPENSSL_PREFIX}/bin:${PATH}"
 ENV LD_LIBRARY_PATH="${OPENSSL_PREFIX}/lib"
 
-## Update openssl.conf
+# Update openssl.conf
 RUN <<EOF cat >> ${OPENSSL_PREFIX}/ssl/openssl.cnf
 openssl_conf = openssl_init
 
@@ -64,7 +64,7 @@ EOF
 # Set OpenSSL configuration globally
 ENV OPENSSL_CONF=${OPENSSL_CONF}
 
-## Install and configure nginx
+# Install and configure nginx
 WORKDIR /build
 RUN wget --no-check-certificate https://nginx.org/download/nginx-1.27.4.tar.gz
 RUN tar zxf nginx-1.27.4.tar.gz
@@ -105,21 +105,24 @@ RUN make && make install
 RUN mkdir /var/lib/nginx && mkdir /opt/nginx/conf.d
 ENV PATH="/opt/sbin:${PATH}"
 
-## Expose ports
+# Expose ports -> 80=HTTP, 443=HTTPS, 444=HTTPS w/PQC and static HTML response
 EXPOSE 80
 EXPOSE 443
 EXPOSE 444
 
-## Create and install new server cert and key
+# Generate and install new server cert and key
 RUN openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 \
     -subj "/C=US/ST=NE/L=Omaha/O=F5/CN=www.f5labs.com" \
     -keyout /etc/server.key  -out /etc/server.crt
 
-## Copy website files
+# Copy website files
 WORKDIR /var/www/site/html
 COPY webserver ./
 
-## Create nginx.conf
+# Create nginx.conf
+#    80=HTTP with travel site
+#   443=HTTPS with travel site
+#   444=HTTPS w/PQC and static response showing negotiated TLS
 RUN <<EOF cat > /opt/nginx/nginx.conf
 user  www-data;
 worker_processes  auto;
@@ -172,8 +175,8 @@ http {
 }
 EOF
 
-## Delete /build folder
+# Delete /build folder
 RUN rm -rf /build
 
-## Start daemon on container run
+# Start daemon on container run
 CMD ["nginx", "-g", "daemon off;"]
