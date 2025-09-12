@@ -4,6 +4,7 @@ LABEL reference="https://github.com/DeepDiver1975"
 
 ARG ARG_LOCAL_SYSLOG
 
+# Update and install required packages
 RUN apt-get update && \
     apt-get -y upgrade && \
     apt-get install -y c-icap libicapapi-dev clamav curl less vim nano libc-icap-mod-virus-scan syslog-ng net-tools tcpdump iputils-ping && \
@@ -15,17 +16,21 @@ RUN apt-get update && \
     chown -R c-icap:c-icap /etc/c-icap/ && \
     echo "Include clamav_mod.conf" >> /etc/c-icap/virus_scan.conf
 
+# Create the entrypoint script
 RUN <<"EOF" cat > /entrypoint.sh
 #!/bin/bash
 
+# Update syslog-ng.conf with local syslog info from environment variable
 sed -i -e "s/^@define local_syslog.*/@define local_syslog \"$ARG_LOCAL_SYSLOG\"/" /etc/syslog-ng/syslog-ng.conf
 service syslog-ng restart
 
+# Start the c-icap service
 /usr/bin/c-icap -f /etc/c-icap/c-icap.conf -D -N
 EOF
 
 RUN chmod +x /entrypoint.sh
 
+# Create the c-icap configuration file
 RUN <<EOF cat > /etc/c-icap/c-icap.conf
 ## Paths
 PidFile           /var/run/c-icap/c-icap.pid
@@ -88,6 +93,7 @@ virus_scan.StartSendPercentDataAfter  2M
 virus_scan.MaxObjectSize              5M
 EOF
 
+# Add information to the bottom on the syslog-ng.conf file to support c-icap logs
 RUN <<"EOF" cat >> /etc/syslog-ng/syslog-ng.conf
 @define local_syslog "foo"
 destination d_relay {network("`local_syslog`" port(514) transport("udp") flags(syslog-protocol));};
