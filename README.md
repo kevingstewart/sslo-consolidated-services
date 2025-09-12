@@ -107,7 +107,8 @@ sudo usermod -aG docker ${USER}
   
 * **Step 4**: Modify the YAML files (as required)
 
-  The Docker Compose YAML files in the ```server-services``` folder are all tuned to the interfaces described above. Modify these as required.
+  The Docker Compose YAML files in the ```server-services``` folder are all tuned to the interfaces described above. Modify these as required. The services with to interfaces have a "to-service" interface and a "from-service" interface. For these "inline" services, inspectable traffic flows into the to-service interface and flows out of the from-service interface. In this pre-defined configuration, the inline service's gateway is the .245 address on the from-service subnet (ex. 198.19.64.245). In most cases, these layer 3 services also need a static return route for the client's network. In this pre-defined configuration, the static return route points to the .7 address on the to-service subnet (ex. 198.19.64.7).
+  
   | Service                   | Interface(s)       | Address(es)                         |
   |---------------------------|--------------------|-------------------------------------|
   | Layer 3 Service           | ens6.60<br>ens6.70 | 198.19.64.30/25<br>198.19.64.130/25 |
