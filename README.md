@@ -375,7 +375,7 @@ Below find the configuration details for all of the containers maintained in thi
   * Open the Syslog web UI
   * Access the following URL:
     ```bash
-    curl -vk https://secure.eicar.org/eicar.com.txt
+    curl -vk https://secure.eicar.org/eicar.com.txt --output -
     ```
 </details>
 
