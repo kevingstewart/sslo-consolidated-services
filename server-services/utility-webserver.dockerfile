@@ -1,7 +1,7 @@
 # Use Ubuntu 24.04 as the base image
 FROM ubuntu:24.04
 
-# Set environment variables
+# Set local environment variables
 ENV DEBIAN_FRONTEND=noninteractive
 ENV OPENSSL_PREFIX=/usr/local
 ENV OPENSSL_CONF=${OPENSSL_PREFIX}/ssl/openssl.cnf
@@ -27,6 +27,7 @@ RUN apt update && apt install -y \
     libpcre3-dev \
     && apt clean
 
+# Update and install required packages
 RUN apt update && apt install -y ca-certificates
 
 # Clone and build OpenSSL 3.5 from source
