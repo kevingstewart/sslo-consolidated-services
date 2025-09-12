@@ -182,7 +182,7 @@ STOPSIGNAL SIGTERM
 
 EXPOSE 8080
 
-# Create Passgen utility
+# Create Passgen utility to create Guacamole user password hash
 RUN <<"EOF" cat > /passgen.py
 import sys
 from hashlib import sha256
@@ -200,7 +200,7 @@ if __name__ == "__main__":
     main()
 EOF
 
-# Create specialized _post_startup.sh script that auto-generates a new initdb.sql on startup
+# Create specialized _post_startup.sh script that auto-generates a new initdb.sql on container startup
 RUN <<"EOF" cat > /usr/local/bin/_post_startup.sh
 #!/bin/sh
 
