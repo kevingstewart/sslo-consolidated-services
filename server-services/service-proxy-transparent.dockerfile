@@ -2,18 +2,22 @@ FROM ubuntu:bionic-20190612
 LABEL maintainer="sameer@damagehead.com"
 LABEL reference="https://github.com/sameersbn/docker-squid"
 
+# Update and install required packages
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install -y squid=3.5.27* apt-utils net-tools iproute2 tcpdump vim nano iputils-ping dnsutils iptables \
  && rm -rf /var/lib/apt/lists/*
 
+# Create the entrypoint script
 RUN <<EOF cat > "/sbin/entrypoint.sh"
 #!/bin/bash
 set -e
 
+# Update routing to support forwarding
 sysctl net.ipv4.ip_forward=1
 sed -i -e 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf
 iptables -t nat -A PREROUTING -i eth1 -p tcp --dport 80 -j REDIRECT --to-port 3128
 
+# Update route table from environment variables
 ip route delete default
 ip route add default via \$ARG_SVC_GATEWAY
 ip route add \$ARG_CLIENT_SUBNET via \$ARG_SVC_INGRESS
@@ -58,6 +62,7 @@ EOF
 
 RUN chmod 755 /sbin/entrypoint.sh
 
+# Create the squid configuration file
 RUN <<EOF cat > "/etc/squid/squid.conf"
 http_access allow all
 http_port 3128
