@@ -1,5 +1,7 @@
 ARG VERSION="1.6.0"
 
+# Ref: https://github.com/flcontainers/guacamole/blob/main/README.md
+
 # Use same Alpine version as the base for the runtime image
 FROM guacamole/guacd:${VERSION}
 
