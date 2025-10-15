@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:14.04
 LABEL maintainer="DeepDiver1975"
 LABEL reference="https://github.com/DeepDiver1975"
 
@@ -7,7 +7,7 @@ ARG ARG_LOCAL_SYSLOG
 # Update and install required packages
 RUN apt-get update && \
     apt-get -y upgrade && \
-    apt-get install -y c-icap libicapapi-dev clamav curl less vim nano libc-icap-mod-virus-scan syslog-ng net-tools tcpdump iputils-ping && \
+    apt-get install -y c-icap libicapapi-dev clamav* curl less vim nano libc-icap-mod-virus-scan syslog-ng net-tools tcpdump iputils-ping && \
     usermod -a -G c-icap c-icap && \
     mkdir -p /var/run/c-icap && \
     touch /var/run/c-icap/c-icap.id && \
