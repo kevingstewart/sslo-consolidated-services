@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:24.04
 LABEL maintainer="DeepDiver1975"
 LABEL reference="https://github.com/DeepDiver1975"
 
