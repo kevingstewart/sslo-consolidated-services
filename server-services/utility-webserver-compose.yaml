@@ -15,6 +15,8 @@ services:
       - 8080:80
       - 9443:443
       - 9444:444
+      - 9445:445
+      - 9446:446
     networks:
       default: {}
       webserver-net:
