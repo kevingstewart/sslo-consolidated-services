@@ -172,6 +172,20 @@ http {
             return 200 "<html><head><title>PQC Test Success!</title></head><body><H2>PQC Test Success!</H1><p><b>Negotiated Protocol</b>: \$ssl_protocol </p><p><b>Negotiated Cipher</b>: \$ssl_cipher </p><p><b>Negotiated Curve</b>: \$ssl_curve </p><p><b>Supported Curves</b>: \$ssl_curves </p></body></html>";
         }
     }
+    server {
+        listen                  0.0.0.0:445 ssl;
+        ssl_certificate         /etc/server.crt;
+        ssl_certificate_key     /etc/server.key;
+        location / {
+                proxy_pass http://utility-juiceshop:3000/;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $remote_addr;
+                proxy_set_header X-Forwared-Proto $scheme;
+                proxy_buffering off;
+                proxy_redirect off;
+        }
+    }
 }
 EOF
 
