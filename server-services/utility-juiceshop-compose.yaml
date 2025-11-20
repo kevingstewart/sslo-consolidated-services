@@ -8,6 +8,6 @@ services:
     expose:
       - 3000
     restart: unless-stopped
-    networks:
-      webserver-net:
-        ipv4_address: 192.168.100.20
+    #networks:
+    #  webserver-net:
+    #    ipv4_address: 192.168.100.20
