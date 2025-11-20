@@ -438,7 +438,7 @@ http {
 
 	    location / {
             default_type text/html;
-            return 200 "<html><head><title>mTLS Test Success!</title></head><body><H2>mTLS Test Success!</H1><p><b>Negotiated Protocol</b>: $ssl_protocol </p><p><b>Negotiated Cipher</b>: $ssl_cipher </p><p><b>Client Certificate Subject</b>: $ssl_client_s_dn</p><p><b>Client Certificate Issuer</b>: $ssl_client_i_dn</p></body></html>";
+            return 200 "<html><head><title>mTLS Test Success!</title></head><body><H2>mTLS Test Success!</H1><p><b>Negotiated Protocol</b>: $ssl_protocol </p><p><b>Negotiated Cipher</b>: $ssl_cipher </p><p><b>Client Certificate Subject</b>: $ssl_client_s_dn</p><p><b>Client Certificate Issuer</b>: $ssl_client_i_dn</p><p><b>Client Certificate Serial</b>: $ssl_client_serial</p><p><b>Client Certificate Fingerprint</b>: $ssl_client_fingerprint</p></body></html>";
     	}
     }
 }
